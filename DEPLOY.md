@@ -92,8 +92,8 @@ Cloudflare Worker example:
 ```js
 export default {
   async fetch(req, env) {
-    const logins = ["higesoot","guac","kody","tat","harold","jibbish",
-                    "quijibo","higgins","talz","capincrunch","grim","jae"];
+    const logins = ["higesoot","kodycq","higetat","higejibbish","higequijibo",
+                    "higecapin","grimwolf36","pughdiddy84"];
     const tok = await fetch("https://id.twitch.tv/oauth2/token", {
       method: "POST",
       body: new URLSearchParams({
@@ -207,3 +207,51 @@ Both pages have the roster hardcoded. To change it:
 - Hero image is `fetchpriority="high"` and preloaded
 - Explicit `width`/`height` on every image to prevent layout shift
 - Total page weight ~48KB HTML + images loaded on demand
+
+---
+
+## 9. Twitch handles — current state
+
+**Confirmed and live on the site:**
+
+| Member | Twitch |
+|---|---|
+| Soot | `HIGEsoot` |
+| Kody | `KodyCQ` |
+| Tat | `higetat` |
+| Jibbish | `HIGEJibbish` |
+| Quijibo | `HIGEQuijibo` |
+| CapinCrunch | `higecapin` |
+| Grim | `grimwolf36` |
+| Pugh | `Pughdiddy84` |
+
+**Still pending** — these render as a dashed "Channel TBA" card and are
+deliberately excluded from `/watch` so no dead embeds appear:
+
+`Guac` · `Harold` · `Higgins` · `Talz` · `Jae`
+
+### To activate one
+
+**`index.html`** — find the member's `<div class="m tba">` block and swap it
+for the anchor form used by confirmed members:
+
+```html
+<a class="m" href="https://twitch.tv/THEIRHANDLE" target="_blank"
+   rel="noopener" data-tw="THEIRHANDLE">
+  <span class="lvb"><span class="dot"></span>Live</span>
+  <span class="mt">Everquester</span>
+  <span class="mn">Harold</span>
+  <span class="ma">&ldquo;Harold Troutman&rdquo;</span>
+  <span class="mv" data-vc></span>
+  <span class="mg"><!-- keep existing svg -->twitch.tv/THEIRHANDLE</span>
+</a>
+```
+
+**`watch.html`** — add to the `CREW` array near the top of the script:
+
+```js
+{"n":"Harold","s":"THEIRHANDLE","t":"Everquester"}
+```
+
+**Cloudflare Worker** (if using live status) — add the lowercase login to
+the `logins` array in section 4.

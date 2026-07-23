@@ -48,7 +48,7 @@ img{display:block;max-width:100%} a{color:inherit;text-decoration:none}
 padding:0 .9rem;background:rgba(9,12,22,.94);border-bottom:1px solid var(--bd);
 backdrop-filter:blur(18px);position:relative;z-index:30}
 #bar .l{display:flex;align-items:center;gap:.75rem;min-width:0}
-#bar img{height:32px}
+#bar img{height:32px;width:auto}
 #bar .ttl{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 78,'opsz' 14,'wght' 900;
 font-size:.86rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
 #bar .cnt{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 74,'wght' 800;
@@ -175,7 +175,7 @@ pointer-events:none;opacity:0;transition:opacity .4s}
 <div class="hint" id="hint">Streams are muted by default &mdash; unmute the one you want</div>
 
 <script>
-const CREW = [{"n": "Soot", "s": "HIGEsoot", "t": "Curiomaster"}, {"n": "Guac", "s": "guac", "t": "Streamsmith"}, {"n": "Kody", "s": "kody", "t": "Scholar"}, {"n": "Tat", "s": "tat", "t": "Cajun Skald"}, {"n": "Harold", "s": "harold", "t": "Everquester"}, {"n": "Jibbish", "s": "jibbish", "t": "Ribbonmaster"}, {"n": "Quijibo", "s": "quijibo", "t": "Duke of Disc Golf"}, {"n": "Higgins", "s": "higgins", "t": "Mayonaise Knight"}, {"n": "Talz", "s": "talz", "t": "Fabulous"}, {"n": "CapinCrunch", "s": "capincrunch", "t": "The Boyer 23"}, {"n": "Grim", "s": "grim", "t": "SleazyBearShark"}, {"n": "Jae", "s": "jae", "t": "IceCreamCakes"}];
+const CREW = [{"n": "Soot", "s": "HIGEsoot", "t": "Curiomaster"}, {"n": "Kody", "s": "KodyCQ", "t": "Scholar"}, {"n": "Tat", "s": "higetat", "t": "Cajun Skald"}, {"n": "Jibbish", "s": "HIGEJibbish", "t": "Ribbonmaster"}, {"n": "Quijibo", "s": "HIGEQuijibo", "t": "Duke of Disc Golf"}, {"n": "CapinCrunch", "s": "higecapin", "t": "The Boyer 23"}, {"n": "Grim", "s": "grimwolf36", "t": "SleazyBearShark"}];
 const PARENTS = [location.hostname, 'hige.gg', 'www.hige.gg', 'localhost']
   .filter((v,i,a) => v && a.indexOf(v) === i);
 const PQ = PARENTS.map(p => 'parent=' + encodeURIComponent(p)).join('&');
