@@ -4,44 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07090f">
-<title>Watch All &mdash; HIGE on Qeynos</title>
-<meta name="description" content="Twelve streams. One launch night. <Hige> rolls Qeynos on EQ Legends launch day — coordinated from level one, every angle streamed live.">
+<title>Watch Live &mdash; HIGE on Qeynos</title>
+<meta name="description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
 <link rel="canonical" href="https://hige.gg/watch">
-
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HIGE.GG">
-<meta property="og:title" content="HIGE × EverQuest Legends — Qeynos, July 28">
-<meta property="og:description" content="Twelve streams. One launch night. <Hige> rolls Qeynos on EQ Legends launch day — coordinated from level one, every angle streamed live.">
+<meta property="og:title" content="HIGE × EverQuest Legends — Live on Qeynos">
+<meta property="og:description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
 <meta property="og:url" content="https://hige.gg/watch">
-<meta property="og:image" content="https://hige.gg/og-image.png">
+<meta property="og:image" content="https://hige.gg/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="HIGE and EverQuest Legends logos over Norrath key art">
-
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HIGE × EverQuest Legends — Qeynos, July 28">
-<meta name="twitter:description" content="Twelve streams. One launch night. <Hige> rolls Qeynos on EQ Legends launch day — coordinated from level one, every angle streamed live.">
-<meta name="twitter:image" content="https://hige.gg/og-image.png">
-
+<meta name="twitter:title" content="HIGE × EverQuest Legends — Live on Qeynos">
+<meta name="twitter:description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
+<meta name="twitter:image" content="https://hige.gg/og-image.jpg">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/key-art.jpg" fetchpriority="high">
 <style>
 :root{--bg:#07090f;--s1:#0c1020;--s2:#121a30;--bd:rgba(120,170,255,.13);--bd2:rgba(120,170,255,.28);
---ink:#eef3ff;--i2:#a8bcdd;--i3:#5a6f9a;--b:#3b82f6;--b2:#60a5fa;--b3:#93c5fd;--g2:#fbd97a;--tw:#9146ff;--lv:#ef4444;
---bar:52px}
+--ink:#eef3ff;--i2:#a8bcdd;--i3:#5a6f9a;--b:#3b82f6;--b2:#60a5fa;--b3:#93c5fd;--g2:#fbd97a;--tw:#9146ff;--lv:#ef4444;--grn2:#a8d95f;
+--bar:54px}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
 body{background:var(--bg);color:var(--i2);font-family:'Lora',Georgia,serif;overflow:hidden}
-img{display:block;max-width:100%} a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto} a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--b2);outline-offset:2px}
-.rf{font-family:'Roboto Flex',sans-serif}
+.rf{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif}
 
 /* BAR */
 #bar{height:var(--bar);display:flex;align-items:center;justify-content:space-between;gap:1rem;
@@ -49,87 +45,90 @@ padding:0 .9rem;background:rgba(9,12,22,.94);border-bottom:1px solid var(--bd);
 backdrop-filter:blur(18px);position:relative;z-index:30}
 #bar .l{display:flex;align-items:center;gap:.75rem;min-width:0}
 #bar img{height:32px;width:auto}
-#bar .ttl{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 78,'opsz' 14,'wght' 900;
+#bar .ttl{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:78%;
 font-size:.86rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
-#bar .cnt{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 74,'wght' 800;
-font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--i3);white-space:nowrap}
-#bar .r{display:flex;align-items:center;gap:.4rem;flex-wrap:nowrap}
-.tb{display:inline-flex;align-items:center;gap:.38rem;background:rgba(255,255,255,.05);
-border:1px solid var(--bd2);border-radius:7px;padding:.4rem .8rem;cursor:pointer;
-font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 76,'wght' 800;
-font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--i2);transition:.14s;white-space:nowrap}
+#bar .live{display:inline-flex;align-items:center;gap:.4rem;color:#fca5a5;
+font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:850;font-stretch:76%;
+font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+#bar .live .rd{width:7px;height:7px;border-radius:50%;background:var(--lv);box-shadow:0 0 8px var(--lv);animation:pl 1.4s ease-in-out infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
+#bar .r{display:flex;align-items:center;gap:.4rem}
+.tb{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.05);
+border:1px solid var(--bd2);border-radius:7px;padding:.45rem .85rem;cursor:pointer;
+font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:850;font-stretch:78%;
+font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--i2);transition:.14s;white-space:nowrap}
 .tb:hover{border-color:var(--b);color:var(--b3)}
 .tb.on{background:var(--b);border-color:var(--b);color:#fff}
-.tb svg{width:13px;height:13px}
-@media(max-width:760px){.tb .lbl{display:none} #bar .cnt{display:none}}
+.tb svg{width:14px;height:14px}
 
 /* LAYOUT */
 #app{display:flex;height:calc(100% - var(--bar));position:relative}
-#grid{flex:1;display:grid;gap:2px;background:#04060c;padding:2px;min-width:0;overflow:auto}
-#grid.g1{grid-template-columns:1fr}
-#grid.g2{grid-template-columns:repeat(2,1fr)}
-#grid.g3{grid-template-columns:repeat(3,1fr)}
-#grid.g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:900px){#grid.g3,#grid.g4{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){#grid{grid-template-columns:1fr!important}}
-
+#stage{flex:1;display:flex;min-width:0;position:relative}
+#grid{flex:1;display:grid;gap:3px;background:#04060c;padding:3px;min-width:0;
+grid-auto-rows:1fr}
 .cell{position:relative;background:#080b14;border:1px solid var(--bd);border-radius:7px;
-overflow:hidden;min-height:150px;display:flex;flex-direction:column}
-.cell.hero{grid-column:span 2;grid-row:span 2}
-@media(max-width:560px){.cell.hero{grid-column:span 1;grid-row:span 1}}
-.cell iframe{width:100%;height:100%;border:0;flex:1}
+overflow:hidden;min-height:0;display:flex;flex-direction:column}
+.cell iframe{width:100%;height:100%;border:0;flex:1;background:#000}
 .ch{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-padding:.3rem .5rem;background:rgba(6,9,18,.9);border-bottom:1px solid var(--bd);flex-shrink:0}
-.ch .nm{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 80,'opsz' 14,'wght' 900;
-font-size:.76rem;color:var(--ink);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ch .ct{display:flex;gap:.25rem;flex-shrink:0}
+padding:.32rem .55rem;background:rgba(6,9,18,.92);border-bottom:1px solid var(--bd);flex-shrink:0}
+.ch .nm{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:80%;
+font-size:.76rem;color:var(--ink);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+display:flex;align-items:center;gap:.4rem}
+.ch .nm .rd{width:6px;height:6px;border-radius:50%;background:var(--lv);flex-shrink:0}
+.ch .ct{display:flex;gap:.28rem;flex-shrink:0}
 .ch button{background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:4px;
-width:22px;height:22px;display:grid;place-items:center;cursor:pointer;color:var(--i3);transition:.13s}
+width:24px;height:24px;display:grid;place-items:center;cursor:pointer;color:var(--i3);transition:.13s}
 .ch button:hover{border-color:var(--b);color:var(--b3)}
-.ch button svg{width:11px;height:11px}
-.ph{flex:1;display:grid;place-items:center;text-align:center;padding:1rem;
-background:linear-gradient(150deg,#111a30,#080b14)}
-.ph .init{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 78,'opsz' 40,'wght' 1000;
-font-size:2.4rem;color:rgba(147,197,253,.18);letter-spacing:-.04em;line-height:1}
-.ph .msg{font-size:.74rem;color:var(--i3);margin-top:.4rem;font-style:italic}
+.ch button svg{width:12px;height:12px}
+
+/* EMPTY STATE */
+.empty{flex:1;display:grid;place-items:center;text-align:center;padding:2rem}
+.empty .inner{max-width:420px}
+.empty .big{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:1000;font-stretch:80%;
+font-size:2.4rem;color:var(--ink);letter-spacing:-.03em;margin-bottom:.6rem}
+.empty p{color:var(--i3);margin-bottom:1.5rem;line-height:1.7}
 
 /* CHAT */
 #chat{width:340px;flex-shrink:0;border-left:1px solid var(--bd);display:flex;flex-direction:column;background:#0a0d18}
 #chat.hidden{display:none}
 .chh{display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;
 border-bottom:1px solid var(--bd);flex-shrink:0}
-.chh .t{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 76,'wght' 850;
+.chh .t{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:850;font-stretch:76%;
 font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--i3)}
 .chh select{background:var(--s2);border:1px solid var(--bd2);border-radius:5px;color:var(--ink);
-padding:.25rem .5rem;font-family:'Roboto Flex',sans-serif;font-size:.74rem;cursor:pointer;max-width:150px}
+padding:.28rem .5rem;font-family:'Roboto Flex',Arial,sans-serif;font-size:.76rem;cursor:pointer;max-width:150px}
 #chat iframe{flex:1;width:100%;border:0}
 @media(max-width:900px){#chat{display:none}}
 
-/* PICKER */
-#pick{position:fixed;inset:0;z-index:60;background:rgba(4,6,12,.85);backdrop-filter:blur(6px);
-display:none;place-items:center;padding:1.5rem}
-#pick.open{display:grid}
-.pbox{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;max-width:640px;width:100%;
-max-height:82vh;overflow:auto;padding:1.5rem}
-.pbox h2{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 80,'opsz' 26,'wght' 1000;
+/* PICKER DRAWER */
+#pick{position:fixed;inset:0;z-index:60;background:rgba(4,6,12,.82);backdrop-filter:blur(6px);
+display:none}
+#pick.open{display:block}
+.pbox{position:absolute;top:0;right:0;bottom:0;width:min(400px,90vw);background:var(--s1);
+border-left:1px solid var(--bd2);padding:1.5rem;overflow-y:auto;
+box-shadow:-20px 0 60px rgba(0,0,0,.5);animation:slide .22s ease}
+@keyframes slide{from{transform:translateX(30px);opacity:.6}to{transform:none;opacity:1}}
+.pbox h2{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:1000;font-stretch:80%;
 font-size:1.4rem;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.02em}
-.pbox p{font-size:.86rem;color:var(--i3);margin-bottom:1.1rem}
-.plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem}
-.pi{display:flex;align-items:center;gap:.55rem;background:var(--s2);border:1px solid var(--bd);
-border-radius:8px;padding:.6rem .7rem;cursor:pointer;transition:.13s}
-.pi:hover{border-color:var(--b)}
-.pi.sel{border-color:var(--tw);background:rgba(145,70,255,.12)}
-.pi input{accent-color:var(--tw);cursor:pointer;flex-shrink:0}
-.pi .n{font-family:'Roboto Flex',sans-serif;font-variation-settings:'wdth' 80,'opsz' 14,'wght' 900;
-font-size:.88rem;color:var(--ink)}
-.pact{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1.2rem;flex-wrap:wrap}
-.pact .tb{padding:.55rem 1.1rem}
-.hint{position:fixed;bottom:.7rem;left:50%;transform:translateX(-50%);z-index:25;
-background:rgba(10,14,26,.92);border:1px solid var(--bd2);border-radius:999px;padding:.4rem 1rem;
-font-family:'Roboto Flex',sans-serif;font-size:.7rem;color:var(--i3);letter-spacing:.06em;
-pointer-events:none;opacity:0;transition:opacity .4s}
+.pbox .psub{font-size:.86rem;color:var(--i3);margin-bottom:1.1rem}
+.prow{display:flex;align-items:center;gap:.7rem;background:var(--s2);border:1px solid var(--bd);
+border-radius:9px;padding:.7rem .85rem;cursor:pointer;transition:.13s;margin-bottom:.45rem}
+.prow:hover{border-color:var(--b)}
+.prow.sel{border-color:var(--tw);background:rgba(145,70,255,.1)}
+.prow input{width:18px;height:18px;accent-color:var(--tw);cursor:pointer;flex-shrink:0}
+.prow .info{flex:1;min-width:0}
+.prow .n{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:80%;
+font-size:1rem;color:var(--ink);line-height:1.2}
+.prow .tt{font-size:.76rem;color:var(--i3);font-style:italic}
+.pfoot{position:sticky;bottom:0;background:var(--s1);padding-top:1rem;margin-top:.5rem;
+display:flex;gap:.5rem;border-top:1px solid var(--bd)}
+.pfoot .tb{flex:1;justify-content:center}
+.hint{position:fixed;bottom:.8rem;left:50%;transform:translateX(-50%);z-index:25;
+background:rgba(10,14,26,.94);border:1px solid var(--bd2);border-radius:999px;padding:.45rem 1.1rem;
+font-family:'Roboto Flex',Arial,sans-serif;font-size:.72rem;color:var(--i3);letter-spacing:.05em;
+pointer-events:none;opacity:0;transition:opacity .4s;text-align:center;max-width:90vw}
 .hint.show{opacity:1}
-@media(prefers-reduced-motion:reduce){*{transition-duration:.001ms!important}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
 </head>
 <body>
@@ -137,21 +136,23 @@ pointer-events:none;opacity:0;transition:opacity .4s}
 <div id="bar">
   <div class="l">
     <a href="/"><img src="/img/hige-white.png" alt="HIGE"></a>
-    <span class="ttl">Launch Night</span>
-    <span class="cnt" id="cnt">&mdash;</span>
+    <span class="ttl">Watch</span>
+    <span class="live"><span class="rd"></span><span id="liveTxt">&mdash; shown</span></span>
   </div>
   <div class="r">
-    <button class="tb" id="pickBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="lbl">Streams</span></button>
-    <button class="tb" data-cols="1">1&times;</button>
-    <button class="tb on" data-cols="2">2&times;</button>
-    <button class="tb" data-cols="3">3&times;</button>
-    <button class="tb" data-cols="4">4&times;</button>
-    <button class="tb" id="chatBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="lbl">Chat</span></button>
+    <button class="tb on" id="pickBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <span>Pick Streams</span>
+    </button>
+    <button class="tb" id="chatBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Chat</span>
+    </button>
   </div>
 </div>
 
 <div id="app">
-  <div id="grid" class="g2"></div>
+  <div id="stage"><div id="grid"></div></div>
   <aside id="chat">
     <div class="chh"><span class="t">Chat</span>
       <select id="chatSel" aria-label="Choose chat channel"></select></div>
@@ -161,120 +162,117 @@ pointer-events:none;opacity:0;transition:opacity .4s}
 
 <div id="pick">
   <div class="pbox">
-    <h2>Choose Streams</h2>
-    <p>Pick who appears in the grid. Selection is saved to this browser.</p>
-    <div class="plist" id="plist"></div>
-    <div class="pact">
+    <h2>Pick Streams</h2>
+    <p class="psub">Choose who to watch. The grid resizes to fit &mdash; pick two, get two side by side; pick six, get a 3&times;2. Saved to this browser.</p>
+    <div id="prows"></div>
+    <div class="pfoot">
       <button class="tb" id="selAll">All</button>
       <button class="tb" id="selNone">None</button>
-      <button class="tb on" id="pickDone">Done</button>
+      <button class="tb on" id="pickDone" style="flex:2">Done</button>
     </div>
   </div>
 </div>
 
-<div class="hint" id="hint">Streams are muted by default &mdash; unmute the one you want</div>
+<div class="hint" id="hint">Streams start muted &mdash; unmute the one you want to hear</div>
 
 <script>
 const CREW = [{"n": "Soot", "s": "HIGEsoot", "t": "Curiomaster"}, {"n": "Kody", "s": "KodyCQ", "t": "Scholar"}, {"n": "Tat", "s": "higetat", "t": "Cajun Skald"}, {"n": "Jibbish", "s": "HIGEJibbish", "t": "Ribbonmaster"}, {"n": "Quijibo", "s": "HIGEQuijibo", "t": "Duke of Disc Golf"}, {"n": "CapinCrunch", "s": "higecapin", "t": "The Boyer 23"}, {"n": "Grim", "s": "grimwolf36", "t": "SleazyBearShark"}];
-const PARENTS = [location.hostname, 'hige.gg', 'www.hige.gg', 'localhost']
-  .filter((v,i,a) => v && a.indexOf(v) === i);
-const PQ = PARENTS.map(p => 'parent=' + encodeURIComponent(p)).join('&');
+const PARENTS = [location.hostname,'hige.gg','www.hige.gg','localhost'].filter((v,i,a)=>v&&a.indexOf(v)===i);
+const PQ = PARENTS.map(p=>'parent='+encodeURIComponent(p)).join('&');
+const grid=document.getElementById('grid'), stage=document.getElementById('stage');
+const chat=document.getElementById('chat'), chatSel=document.getElementById('chatSel'), chatFrame=document.getElementById('chatFrame');
+const liveTxt=document.getElementById('liveTxt');
 
-const grid = document.getElementById('grid');
-const chat = document.getElementById('chat');
-const chatSel = document.getElementById('chatSel');
-const chatFrame = document.getElementById('chatFrame');
-const cnt = document.getElementById('cnt');
+const LS='hige-watch-sel';
+let sel=(()=>{try{const v=JSON.parse(localStorage.getItem(LS));if(Array.isArray(v))return v;}catch(_){}return CREW.map(c=>c.s);})();
 
-const LS = 'hige-watch-sel';
-let sel = (() => {
-  try { const v = JSON.parse(localStorage.getItem(LS)); if (Array.isArray(v) && v.length) return v; } catch(_){}
-  return CREW.map(c => c.s);
-})();
-
-function embed(login){
-  return 'https://player.twitch.tv/?channel=' + encodeURIComponent(login) + '&' + PQ + '&muted=true&autoplay=true';
+/* choose column count from stream count + viewport */
+function cols(n){
+  const wide = innerWidth > 560;
+  if(!wide) return 1;
+  if(n<=1) return 1;
+  if(n<=2) return 2;
+  if(n<=4) return 2;
+  if(n<=6) return 3;
+  if(n<=9) return 3;
+  return 4;
 }
+function embed(login){return 'https://player.twitch.tv/?channel='+encodeURIComponent(login)+'&'+PQ+'&muted=true&autoplay=true';}
 
 function render(){
-  grid.innerHTML = '';
-  const list = CREW.filter(c => sel.includes(c.s));
-  cnt.textContent = list.length + ' / ' + CREW.length + ' shown';
-  if (!list.length){
-    grid.innerHTML = '<div class="cell"><div class="ph"><div><div class="init">0</div><div class="msg">No streams selected</div></div></div></div>';
-    return;
+  const list = CREW.filter(c=>sel.includes(c.s));
+  liveTxt.textContent = list.length + ' / ' + CREW.length + ' shown';
+  if(!list.length){
+    grid.style.gridTemplateColumns='1fr';
+    grid.innerHTML='<div class="empty"><div class="inner"><div class="big">No streams picked</div>'+
+      '<p>Hit <b>Pick Streams</b> and choose who you want to watch. The layout builds itself around your picks.</p>'+
+      '<button class="tb on" onclick="document.getElementById(\'pickBtn\').click()" style="margin:0 auto;display:inline-flex">Pick Streams</button></div></div>';
+    buildChatSel([]); return;
   }
-  list.forEach((c, i) => {
-    const cell = document.createElement('div');
-    cell.className = 'cell' + (i === 0 && list.length > 3 ? ' hero' : '');
-    cell.innerHTML =
-      '<div class="ch"><span class="nm">' + c.n + '</span><div class="ct">' +
-      '<button title="Open on Twitch" data-open="' + c.s + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></button>' +
-      '<button title="Hide" data-hide="' + c.s + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
-      '</div></div>' +
-      '<iframe src="' + embed(c.s) + '" allowfullscreen title="' + c.n + ' stream" loading="lazy"></iframe>';
-    grid.appendChild(cell);
-  });
+  const c = cols(list.length);
+  grid.style.gridTemplateColumns='repeat('+c+',1fr)';
+  grid.innerHTML = list.map(m =>
+    '<div class="cell">'+
+      '<div class="ch"><span class="nm"><span class="rd"></span>'+m.n+'</span><div class="ct">'+
+      '<button title="Open on Twitch" onclick="window.open(\'https://twitch.tv/'+m.s+'\',\'_blank\',\'noopener\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></button>'+
+      '<button title="Remove" data-hide="'+m.s+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>'+
+      '</div></div>'+
+      '<iframe src="'+embed(m.s)+'" allowfullscreen title="'+m.n+' stream"></iframe>'+
+    '</div>').join('');
   buildChatSel(list);
 }
 
 function buildChatSel(list){
-  const cur = chatSel.value;
-  chatSel.innerHTML = list.map(c => '<option value="' + c.s + '">' + c.n + '</option>').join('');
-  const pick = list.some(c => c.s === cur) ? cur : (list[0] && list[0].s);
-  if (pick){ chatSel.value = pick; setChat(pick); }
+  const cur=chatSel.value;
+  chatSel.innerHTML=list.map(c=>'<option value="'+c.s+'">'+c.n+'</option>').join('');
+  const pick=list.some(c=>c.s===cur)?cur:(list[0]&&list[0].s);
+  if(pick){chatSel.value=pick; setChat(pick);} else chatFrame.removeAttribute('src');
 }
-function setChat(login){
-  chatFrame.src = 'https://www.twitch.tv/embed/' + encodeURIComponent(login) + '/chat?darkpopout&' + PQ;
-}
-chatSel.addEventListener('change', () => setChat(chatSel.value));
+function setChat(login){chatFrame.src='https://www.twitch.tv/embed/'+encodeURIComponent(login)+'/chat?darkpopout&'+PQ;}
+chatSel.addEventListener('change',()=>setChat(chatSel.value));
 
-grid.addEventListener('click', e => {
-  const o = e.target.closest('[data-open]'), h = e.target.closest('[data-hide]');
-  if (o) window.open('https://twitch.tv/' + o.dataset.open, '_blank', 'noopener');
-  if (h){ sel = sel.filter(s => s !== h.dataset.hide); save(); render(); syncPicker(); }
+grid.addEventListener('click',e=>{
+  const h=e.target.closest('[data-hide]');
+  if(h){sel=sel.filter(s=>s!==h.dataset.hide); save(); render(); syncPicker();}
 });
 
-document.querySelectorAll('[data-cols]').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('[data-cols]').forEach(x => x.classList.remove('on'));
-  b.classList.add('on');
-  grid.className = 'g' + b.dataset.cols;
-}));
-
-document.getElementById('chatBtn').addEventListener('click', function(){
-  chat.classList.toggle('hidden'); this.classList.toggle('on', !chat.classList.contains('hidden'));
+document.getElementById('chatBtn').addEventListener('click',function(){
+  chat.classList.toggle('hidden'); this.classList.toggle('on',!chat.classList.contains('hidden'));
 });
 document.getElementById('chatBtn').classList.add('on');
 
 /* PICKER */
-const pick = document.getElementById('pick'), plist = document.getElementById('plist');
-plist.innerHTML = CREW.map(c =>
-  '<label class="pi" data-s="' + c.s + '"><input type="checkbox" value="' + c.s + '"><span class="n">' + c.n + '</span></label>'
+const pick=document.getElementById('pick'), prows=document.getElementById('prows');
+prows.innerHTML=CREW.map(c=>
+  '<label class="prow" data-s="'+c.s+'"><input type="checkbox" value="'+c.s+'">'+
+  '<span class="info"><span class="n">'+c.n+'</span><span class="tt">'+c.t+'</span></span></label>'
 ).join('');
 function syncPicker(){
-  plist.querySelectorAll('input').forEach(i => {
-    i.checked = sel.includes(i.value);
-    i.closest('.pi').classList.toggle('sel', i.checked);
+  prows.querySelectorAll('input').forEach(i=>{
+    i.checked=sel.includes(i.value); i.closest('.prow').classList.toggle('sel',i.checked);
   });
 }
-plist.addEventListener('change', e => {
-  const v = e.target.value;
-  if (e.target.checked){ if(!sel.includes(v)) sel.push(v); } else sel = sel.filter(s => s !== v);
-  e.target.closest('.pi').classList.toggle('sel', e.target.checked);
-  save();
+prows.addEventListener('change',e=>{
+  const v=e.target.value;
+  if(e.target.checked){if(!sel.includes(v))sel.push(v);} else sel=sel.filter(s=>s!==v);
+  e.target.closest('.prow').classList.toggle('sel',e.target.checked); save();
 });
-function save(){ try{ localStorage.setItem(LS, JSON.stringify(sel)); }catch(_){} }
-document.getElementById('pickBtn').addEventListener('click', () => { syncPicker(); pick.classList.add('open'); });
-document.getElementById('pickDone').addEventListener('click', () => { pick.classList.remove('open'); render(); });
-document.getElementById('selAll').addEventListener('click', () => { sel = CREW.map(c=>c.s); save(); syncPicker(); });
-document.getElementById('selNone').addEventListener('click', () => { sel = []; save(); syncPicker(); });
-pick.addEventListener('click', e => { if(e.target === pick){ pick.classList.remove('open'); render(); } });
-addEventListener('keydown', e => { if(e.key === 'Escape' && pick.classList.contains('open')){ pick.classList.remove('open'); render(); } });
+function save(){try{localStorage.setItem(LS,JSON.stringify(sel));}catch(_){}}
+function openPick(){syncPicker(); pick.classList.add('open');}
+function closePick(){pick.classList.remove('open'); render();}
+document.getElementById('pickBtn').addEventListener('click',openPick);
+document.getElementById('pickDone').addEventListener('click',closePick);
+document.getElementById('selAll').addEventListener('click',()=>{sel=CREW.map(c=>c.s);save();syncPicker();});
+document.getElementById('selNone').addEventListener('click',()=>{sel=[];save();syncPicker();});
+pick.addEventListener('click',e=>{if(e.target===pick)closePick();});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&pick.classList.contains('open'))closePick();});
+
+let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(render,180);},{passive:true});
 
 render();
-const hint = document.getElementById('hint');
-setTimeout(() => hint.classList.add('show'), 1200);
-setTimeout(() => hint.classList.remove('show'), 7000);
+const hint=document.getElementById('hint');
+setTimeout(()=>hint.classList.add('show'),1200);
+setTimeout(()=>hint.classList.remove('show'),7000);
 </script>
 </body>
 </html>
