@@ -144,6 +144,34 @@ font-weight:700;font-stretch:74%;margin-top:.3rem;display:none}
 .tbal{color:var(--i3)!important;opacity:.85}
 .tbal svg{opacity:.5}
 
+/* LEVEL BADGE ON ROSTER */
+.lvbadge{display:inline-block;margin-left:.5rem;vertical-align:.15em;
+font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:76%;
+font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
+color:var(--b3);background:rgba(59,130,246,.14);border:1px solid rgba(59,130,246,.3);
+border-radius:5px;padding:.1rem .4rem;line-height:1.4}
+.lvbadge.max{color:#a8d95f;background:rgba(126,183,58,.16);border-color:rgba(126,183,58,.4)}
+
+/* GUILD ROSTER TABLE */
+#guild{background:var(--bg)}
+.gwrap{max-width:900px;margin:0 auto;padding:5rem 1.75rem}
+.gtable{border:1px solid var(--bd);border-radius:12px;overflow:hidden;background:var(--s1)}
+.grow{display:grid;grid-template-columns:1.4fr auto 2fr;gap:1rem;align-items:center;
+padding:.7rem 1.25rem;border-bottom:1px solid var(--bd);transition:background .12s}
+.grow:last-child{border-bottom:0}
+.grow:hover{background:rgba(59,130,246,.05)}
+.grow.head{background:rgba(59,130,246,.08);border-bottom:1px solid var(--bd2)}
+.grow.head span{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:74%;
+font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--b3)}
+.gc-name{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:1000;font-stretch:80%;
+font-size:1.02rem;color:var(--ink);letter-spacing:-.01em}
+.gc-lvl{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:900;font-stretch:78%;
+font-size:.9rem;color:var(--i2);text-align:center;min-width:2.5rem}
+.gc-lvl.max{color:#a8d95f}
+.gc-cls{font-family:'Roboto Flex','Roboto Condensed',Arial,sans-serif;font-weight:800;font-stretch:76%;
+font-size:.8rem;letter-spacing:.06em;color:var(--i3);text-align:right}
+.gnote{text-align:center;font-size:.83rem;color:var(--i3);font-style:italic;margin-top:1.25rem}
+
 /* LIVE HERO STATE */
 .livepill{display:inline-flex;align-items:center;gap:.55rem;background:rgba(239,68,68,.14);
 border:1px solid rgba(239,68,68,.45);border-radius:999px;padding:.5rem 1.35rem;
@@ -232,7 +260,7 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
 <nav id="nav">
   <a class="lg" href="#h" aria-label="HIGE home"><img src="/img/hige-white.png" alt="HIGE" width="520" height="592"></a>
   <div class="nl">
-    <a href="#r">Streams</a><a href="#boss">Kills</a><a href="#join">Join</a>
+    <a href="#r">Streams</a><a href="#boss">Kills</a><a href="#guild">Roster</a><a href="#join">Join</a>
     <a class="hi" href="/watch">Watch Live &rarr;</a>
   </div>
 </nav>
@@ -271,63 +299,63 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
         <a class="m" href="https://twitch.tv/HIGEsoot" target="_blank" rel="noopener" data-tw="HIGEsoot">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">Curiomaster</span>
-          <span class="mn">Soot</span>
+          <span class="mn">Soot<span class="lvbadge max">Lv 50</span></span>
           <span class="ma">&ldquo;Puck Periwinkle&rdquo;</span>
-          <span class="mrace"><span class="chip race" title="Race">Dwarf</span><span class="chip cls pri" title="Shadow Knight">SHD</span><span class="csep">/</span><span class="chip cls" title="Berserker">BER</span><span class="csep">/</span><span class="chip cls" title="Enchanter">ENC</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Shadow Knight">SHD</span><span class="csep">/</span><span class="chip cls" title="Enchanter">ENC</span><span class="csep">/</span><span class="chip cls" title="Berserker">BER</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/HIGEsoot</b></span>
         </a>
         <a class="m" href="https://twitch.tv/KodyCQ" target="_blank" rel="noopener" data-tw="KodyCQ">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">Scholar</span>
-          <span class="mn">Kody</span>
+          <span class="mn">Kody<span class="lvbadge">Lv 16</span></span>
           <span class="ma">&ldquo;Ben Slattery&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Monk">MNK</span><span class="csep">/</span><span class="chip cls" title="Shaman">SHM</span><span class="csep">/</span><span class="chip cls" title="Beastlord">BST</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/KodyCQ</b></span>
         </a>
         <a class="m" href="https://twitch.tv/higetat" target="_blank" rel="noopener" data-tw="higetat">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">Cajun Skald</span>
-          <span class="mn">Tat</span>
+          <span class="mn">Tat<span class="lvbadge max">Lv 50</span></span>
           <span class="ma">&ldquo;Bob Bartholemew&rdquo;</span>
-          <span class="mrace"><span class="chip cls pri" title="Enchanter">ENC</span><span class="csep">/</span><span class="chip cls" title="Cleric">CLR</span><span class="csep">/</span><span class="chip cls" title="Wizard">WIZ</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Cleric">CLR</span><span class="csep">/</span><span class="chip cls" title="Wizard">WIZ</span><span class="csep">/</span><span class="chip cls" title="Enchanter">ENC</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/higetat</b></span>
         </a>
         <a class="m" href="https://twitch.tv/HIGEJibbish" target="_blank" rel="noopener" data-tw="HIGEJibbish">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">Ribbonmaster</span>
-          <span class="mn">Jibbish</span>
+          <span class="mn">Jibbish<span class="lvbadge max">Lv 50</span></span>
           <span class="ma">&ldquo;Jibbish&rdquo;</span>
-          <span class="mrace"><span class="chip cls pri" title="Ranger">RNG</span><span class="csep">/</span><span class="chip cls" title="Wizard">WIZ</span><span class="csep">/</span><span class="chip cls" title="Bard">BRD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Ranger">RNG</span><span class="csep">/</span><span class="chip cls" title="Bard">BRD</span><span class="csep">/</span><span class="chip cls" title="Wizard">WIZ</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/HIGEJibbish</b></span>
         </a>
         <a class="m" href="https://twitch.tv/HIGEQuijibo" target="_blank" rel="noopener" data-tw="HIGEQuijibo">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">Duke of Disc Golf</span>
-          <span class="mn">Quijibo</span>
+          <span class="mn">Quijibo<span class="lvbadge">Lv 41</span></span>
           <span class="ma">&ldquo;Benedict Pious&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Paladin">PAL</span><span class="csep">/</span><span class="chip cls" title="Monk">MNK</span><span class="csep">/</span><span class="chip cls" title="Berserker">BER</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/HIGEQuijibo</b></span>
         </a>
         <a class="m" href="https://twitch.tv/higecapin" target="_blank" rel="noopener" data-tw="higecapin">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">The Boyer 23</span>
-          <span class="mn">CapinCrunch</span>
+          <span class="mn">CapinCrunch<span class="lvbadge">Lv 5</span></span>
           <span class="ma">&ldquo;Capn&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Druid">DRU</span><span class="csep">/</span><span class="chip cls" title="Bard">BRD</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/higecapin</b></span>
         </a>
         <a class="m" href="https://twitch.tv/grimwolf36" target="_blank" rel="noopener" data-tw="grimwolf36">
           <span class="lvb"><span class="dot"></span>Live</span>
           <span class="mt">SleazyBearShark</span>
-          <span class="mn">Grim</span>
+          <span class="mn">Grim<span class="lvbadge max">Lv 50</span></span>
           <span class="ma">&ldquo;Grimwolf&rdquo;</span>
-          <span class="mrace"><span class="chip cls pri" title="Berserker">BER</span><span class="csep">/</span><span class="chip cls" title="Warrior">WAR</span><span class="csep">/</span><span class="chip cls" title="Shaman">SHM</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Warrior">WAR</span><span class="csep">/</span><span class="chip cls" title="Shaman">SHM</span><span class="csep">/</span><span class="chip cls" title="Berserker">BER</span></span>
           <span class="mv" data-vc></span>
           <span class="mg"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>twitch.tv/grimwolf36</b></span>
         </a>
@@ -340,23 +368,23 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
         </div>
         <div class="m tba">
           <span class="mt">Everquester</span>
-          <span class="mn">Harold</span>
+          <span class="mn">Harold<span class="lvbadge max">Lv 50</span></span>
           <span class="ma">&ldquo;Harold Troutman&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Beastlord">BST</span><span class="csep">/</span><span class="chip cls" title="Druid">DRU</span><span class="csep">/</span><span class="chip cls" title="Rogue">ROG</span></span>
           <span class="mg tbal"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>Channel TBA</b></span>
         </div>
         <div class="m tba">
           <span class="mt">Mayonaise Knight</span>
-          <span class="mn">Higgins</span>
+          <span class="mn">Higgins<span class="lvbadge">Lv 47</span></span>
           <span class="ma">&ldquo;jackie jackson&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Bard">BRD</span><span class="csep">/</span><span class="chip cls" title="Necromancer">NEC</span><span class="csep">/</span><span class="chip cls" title="Wizard">WIZ</span></span>
           <span class="mg tbal"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>Channel TBA</b></span>
         </div>
         <div class="m tba">
           <span class="mt">Fabulous</span>
-          <span class="mn">Talz</span>
+          <span class="mn">Talz<span class="lvbadge">Lv 37</span></span>
           <span class="ma">&ldquo;Duke Plisken the III&rdquo;</span>
-          <span class="mrace"><span class="chip tbd">Class TBD</span></span>
+          <span class="mrace"><span class="chip cls pri" title="Paladin">PAL</span><span class="csep">/</span><span class="chip cls" title="Monk">MNK</span><span class="csep">/</span><span class="chip cls" title="Enchanter">ENC</span></span>
           <span class="mg tbal"><svg viewBox="0 0 24 28" fill="currentColor" aria-hidden="true"><path d="M2.149 0L0 6.182V23.09h5.818V28h3.636l4.91-4.91h4.363L24 17.272V0H2.15zm19.394 16.363l-3.636 3.637h-5.455l-4.363 4.363v-4.363H3.636V2.546H21.54v13.817zM16.363 7.273h2.546v5.455h-2.546zm-6.909 0h2.546v5.455H9.454z"/></svg><b>Channel TBA</b></span>
         </div>
         <div class="m tba">
@@ -371,7 +399,7 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
 
 <section id="boss"><div class="bwrap">
   <div class="sh rv"><p class="lbl">Raid Progress</p><h2>Boss Kill Tracker</h2>
-  <p>Named raid targets the crew has put down since launch. Difficulty tier noted per kill.</p></div>
+  <p>Named raid targets since launch &mdash; cleared and still on the list. Difficulty tier noted per target.</p></div>
   <div class="bgrid rv">
       <div class="bcard down">
         <span class="bdiff">D4</span>
@@ -394,11 +422,53 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
       <div class="bcard down">
         <span class="bdiff">D4</span>
         <span class="bstatus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Down</span>
+        <div class="bname">Phinigel Autropos</div>
+        <div class="bzone">Kedge Keep</div>
+      </div>
+      <div class="bcard pending">
+        <span class="bdiff">D4</span>
+        <span class="bstatus">Pending</span>
         <div class="bname">The Hole</div>
         <div class="bzone">The Hole</div>
       </div>
+      <div class="bcard pending">
+        <span class="bdiff">Raid</span>
+        <span class="bstatus">Pending</span>
+        <div class="bname">Innoruuk</div>
+        <div class="bzone">Plane of Fear</div>
+      </div>
+      <div class="bcard pending">
+        <span class="bdiff">Raid</span>
+        <span class="bstatus">Pending</span>
+        <div class="bname">Eye of Veeshan</div>
+        <div class="bzone">Plane of Sky</div>
+      </div>
   </div>
   <div class="btally rv"><span class="num">4</span><span class="txt">Raid Targets Down</span></div>
+</div></section>
+
+<section id="guild"><div class="gwrap">
+  <div class="sh rv"><p class="lbl">The Guild</p><h2>Current Roster</h2>
+  <p>Live character progress on Qeynos. 5 of 15 already at the level cap.</p></div>
+  <div class="gtable rv">
+      <div class="grow head"><span>Character</span><span style="text-align:center">Lvl</span><span style="text-align:right">Class</span></div>
+      <div class="grow"><span class="gc-name">Capincrunch</span><span class="gc-lvl">5</span><span class="gc-cls">DRU/BRD</span></div>
+      <div class="grow"><span class="gc-name">Ding</span><span class="gc-lvl">39</span><span class="gc-cls">MNK/SHM/NEC</span></div>
+      <div class="grow"><span class="gc-name">Grimwolf</span><span class="gc-lvl max">50</span><span class="gc-cls">WAR/SHM/BER</span></div>
+      <div class="grow"><span class="gc-name">Harold</span><span class="gc-lvl">17</span><span class="gc-cls">PAL/DRU/ROG</span></div>
+      <div class="grow"><span class="gc-name">Higgins</span><span class="gc-lvl">47</span><span class="gc-cls">BRD/NEC/WIZ</span></div>
+      <div class="grow"><span class="gc-name">Jibbish</span><span class="gc-lvl max">50</span><span class="gc-cls">RNG/BRD/WIZ</span></div>
+      <div class="grow"><span class="gc-name">Kody</span><span class="gc-lvl">16</span><span class="gc-cls">MNK/SHM/BST</span></div>
+      <div class="grow"><span class="gc-name">Lopt</span><span class="gc-lvl">19</span><span class="gc-cls">SHD/SHM/ENC</span></div>
+      <div class="grow"><span class="gc-name">Lotek</span><span class="gc-lvl">43</span><span class="gc-cls">WAR/SHM/NEC</span></div>
+      <div class="grow"><span class="gc-name">Quijibo</span><span class="gc-lvl">41</span><span class="gc-cls">PAL/MNK/BER</span></div>
+      <div class="grow"><span class="gc-name">Soot</span><span class="gc-lvl max">50</span><span class="gc-cls">SHD/ENC/BER</span></div>
+      <div class="grow"><span class="gc-name">Talz</span><span class="gc-lvl">37</span><span class="gc-cls">PAL/MNK/ENC</span></div>
+      <div class="grow"><span class="gc-name">Tatimus</span><span class="gc-lvl max">50</span><span class="gc-cls">CLR/WIZ/ENC</span></div>
+      <div class="grow"><span class="gc-name">Ursula</span><span class="gc-lvl">20</span><span class="gc-cls">WAR/CLR/SHM</span></div>
+      <div class="grow"><span class="gc-name">Zalimus</span><span class="gc-lvl max">50</span><span class="gc-cls">SHD/MNK/SHM</span></div>
+  </div>
+  <p class="gnote">Guild tag &lt;Hige&gt; &bull; some entries are member alts. Names as they appear in-game.</p>
 </div></section>
 
 <section id="join"><div class="jw2 rv">
@@ -414,7 +484,7 @@ font-size:.76rem;color:#33405e;letter-spacing:.05em;line-height:1.9}
 <footer>
   <img class="flogo" src="/img/hige-white.png" alt="HIGE" loading="lazy" width="520" height="592">
   <div class="fl">
-    <a href="#r">Streams</a><a href="#boss">Kills</a><a href="#join">Join</a><a href="/watch">Watch Live</a>
+    <a href="#r">Streams</a><a href="#boss">Kills</a><a href="#guild">Roster</a><a href="#join">Join</a><a href="/watch">Watch Live</a>
   </div>
   <p class="fc">&copy; 2026 HIGE.GG &mdash; Sharing 30+ years of fun gaming with the world<br>
   Not affiliated with Daybreak Game Company. EverQuest is a registered trademark of its respective owner.</p>
