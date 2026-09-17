@@ -1,277 +1,197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#07090f">
-<title>Watch Live &mdash; HIGE on Qeynos</title>
-<meta name="description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HIGE.GG · Multi-Stream</title>
+<meta name="description" content="Every HIGE channel, one grid. Wardogs convoys, Warhammer campaigns, Hero Siege ladder, Civ VII, EQ:Legends raids.">
+<meta name="theme-color" content="#08090b">
+<meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://hige.gg/watch">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="HIGE.GG">
-<meta property="og:title" content="HIGE × EverQuest Legends — Live on Qeynos">
-<meta property="og:description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
-<meta property="og:url" content="https://hige.gg/watch">
+<meta property="og:title" content="HIGE.GG · Multi-Stream">
+<meta property="og:description" content="Every HIGE channel, one grid. Pick your angles.">
 <meta property="og:image" content="https://hige.gg/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="HIGE and EverQuest Legends logos over Norrath key art">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HIGE × EverQuest Legends — Live on Qeynos">
-<meta name="twitter:description" content="Twelve streams, one server. <Hige> is live on Qeynos in EverQuest Legends — coordinated group play, every angle streamed.">
-<meta name="twitter:image" content="https://hige.gg/og-image.jpg">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="img/hige-seal.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:ital,wght@0,400;0,500;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/img/key-art.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;900&family=Cinzel+Decorative:wght@900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#140d09;--s1:#241812;--s2:#2e1f15;--bd:rgba(237,158,37,.14);--bd2:rgba(237,158,37,.32);
---ink:#f4e9d4;--i2:#cdb68f;--i3:#8a7150;--b:#e35e24;--b2:#ff7a3c;--b3:#f5c95a;--g2:#f5c95a;--tw:#9146ff;--lv:#e35e24;--grn2:#bcd47a;--bar:54px}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--void:#08090b;--pitch:#0d0f12;--slab:#14171c;--slab2:#1b2027;--iron:#272d36;--steel:#49525f;
+--ash:#8b8778;--bone:#ece5d5;--parch:#c9c2b0;--ember:#e0912b;--ember-lit:#ffb648;--blood:#b8232b;--blood-lit:#e64a3c;
+--rule:rgba(236,229,213,.13)}
+*{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--i2);font-family:'Spectral',Georgia,serif;overflow:hidden}
-img{display:block;max-width:100%;height:auto} a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
-.rf{font-family:'Cinzel',Georgia,serif}
-
-/* BAR */
-#bar{height:var(--bar);display:flex;align-items:center;justify-content:space-between;gap:1rem;
-padding:0 .9rem;background:rgba(9,12,22,.94);border-bottom:1px solid var(--bd);
-backdrop-filter:blur(18px);position:relative;z-index:30}
-#bar .l{display:flex;align-items:center;gap:.75rem;min-width:0}
-#bar img{height:32px;width:auto}
-#bar .ttl{font-family:'Cinzel',Georgia,serif;font-weight:900;
-font-size:.86rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
-#bar .live{display:inline-flex;align-items:center;gap:.4rem;color:#fca5a5;
-font-family:'Cinzel',Georgia,serif;font-weight:850;
-font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
-#bar .live .rd{width:7px;height:7px;border-radius:50%;background:var(--lv);box-shadow:0 0 8px var(--lv);animation:pl 1.4s ease-in-out infinite}
-@keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
-#bar .r{display:flex;align-items:center;gap:.4rem}
-.tb{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.05);
-border:1px solid var(--bd2);border-radius:7px;padding:.45rem .85rem;cursor:pointer;
-font-family:'Cinzel',Georgia,serif;font-weight:850;
-font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--i2);transition:.14s;white-space:nowrap}
-.tb:hover{border-color:var(--b);color:var(--b3)}
-.tb.on{background:var(--b);border-color:var(--b);color:#fff}
-.tb svg{width:14px;height:14px}
-
-/* LAYOUT */
-#app{display:flex;height:calc(100% - var(--bar));position:relative}
-#stage{flex:1;display:flex;min-width:0;position:relative}
-#grid{flex:1;display:grid;gap:3px;background:#04060c;padding:3px;min-width:0;
-grid-auto-rows:1fr}
-.cell{position:relative;background:#080b14;border:1px solid var(--bd);border-radius:7px;
-overflow:hidden;min-height:0;display:flex;flex-direction:column}
-.cell iframe{width:100%;height:100%;border:0;flex:1;background:#000}
-.ch{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
-padding:.32rem .55rem;background:rgba(6,9,18,.92);border-bottom:1px solid var(--bd);flex-shrink:0}
-.ch .nm{font-family:'Cinzel',Georgia,serif;font-weight:900;
-font-size:.76rem;color:var(--ink);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-display:flex;align-items:center;gap:.4rem}
-.ch .nm .rd{width:6px;height:6px;border-radius:50%;background:var(--lv);flex-shrink:0}
-.ch .ct{display:flex;gap:.28rem;flex-shrink:0}
-.ch button{background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:4px;
-width:24px;height:24px;display:grid;place-items:center;cursor:pointer;color:var(--i3);transition:.13s}
-.ch button:hover{border-color:var(--b);color:var(--b3)}
-.ch button svg{width:12px;height:12px}
-
-/* EMPTY STATE */
-.empty{flex:1;display:grid;place-items:center;text-align:center;padding:2rem}
-.empty .inner{max-width:420px}
-.empty .big{font-family:'Cinzel',Georgia,serif;font-weight:1000;
-font-size:2.4rem;color:var(--ink);letter-spacing:-.03em;margin-bottom:.6rem}
-.empty p{color:var(--i3);margin-bottom:1.5rem;line-height:1.7}
-
-/* CHAT */
-#chat{width:340px;flex-shrink:0;border-left:1px solid var(--bd);display:flex;flex-direction:column;background:#0a0d18}
-#chat.hidden{display:none}
-.chh{display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;
-border-bottom:1px solid var(--bd);flex-shrink:0}
-.chh .t{font-family:'Cinzel',Georgia,serif;font-weight:850;
-font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--i3)}
-.chh select{background:var(--s2);border:1px solid var(--bd2);border-radius:5px;color:var(--ink);
-padding:.28rem .5rem;font-family:'Cinzel',Georgia,serif;font-size:.76rem;cursor:pointer;max-width:150px}
-#chat iframe{flex:1;width:100%;border:0}
-@media(max-width:900px){#chat{display:none}}
-
-/* PICKER DRAWER */
-#pick{position:fixed;inset:0;z-index:60;background:rgba(4,6,12,.82);backdrop-filter:blur(6px);
-display:none}
-#pick.open{display:block}
-.pbox{position:absolute;top:0;right:0;bottom:0;width:min(400px,90vw);background:var(--s1);
-border-left:1px solid var(--bd2);padding:1.5rem;overflow-y:auto;
-box-shadow:-20px 0 60px rgba(0,0,0,.5);animation:slide .22s ease}
-@keyframes slide{from{transform:translateX(30px);opacity:.6}to{transform:none;opacity:1}}
-.pbox h2{font-family:'Cinzel',Georgia,serif;font-weight:1000;
-font-size:1.4rem;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.02em}
-.pbox .psub{font-size:.86rem;color:var(--i3);margin-bottom:1.1rem}
-.prow{display:flex;align-items:center;gap:.7rem;background:var(--s2);border:1px solid var(--bd);
-border-radius:9px;padding:.7rem .85rem;cursor:pointer;transition:.13s;margin-bottom:.45rem}
-.prow:hover{border-color:var(--b)}
-.prow.sel{border-color:var(--tw);background:rgba(145,70,255,.1)}
-.prow input{width:18px;height:18px;accent-color:var(--tw);cursor:pointer;flex-shrink:0}
-.prow .info{flex:1;min-width:0}
-.prow .n{font-family:'Cinzel',Georgia,serif;font-weight:900;
-font-size:1rem;color:var(--ink);line-height:1.2}
-.prow .tt{font-size:.76rem;color:var(--i3);font-style:italic}
-.pfoot{position:sticky;bottom:0;background:var(--s1);padding-top:1rem;margin-top:.5rem;
-display:flex;gap:.5rem;border-top:1px solid var(--bd)}
-.pfoot .tb{flex:1;justify-content:center}
-.hint{position:fixed;bottom:.8rem;left:50%;transform:translateX(-50%);z-index:25;
-background:rgba(10,14,26,.94);border:1px solid var(--bd2);border-radius:999px;padding:.45rem 1.1rem;
-font-family:'Cinzel',Georgia,serif;font-size:.72rem;color:var(--i3);letter-spacing:.05em;
-pointer-events:none;opacity:0;transition:opacity .4s;text-align:center;max-width:90vw}
-.hint.show{opacity:1}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{margin:0;background:var(--void);color:var(--parch);font-family:'Share Tech Mono',ui-monospace,monospace;display:flex;flex-direction:column;min-height:100svh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.bar{display:flex;align-items:center;gap:14px;padding:0 16px;height:58px;flex:0 0 auto;background:rgba(8,9,11,.92);border-bottom:1px solid var(--rule);position:relative;z-index:5}
+.bar .crest{width:30px;height:auto;filter:drop-shadow(0 0 8px rgba(224,145,43,.35))}
+.bar .wm{font-family:'Cinzel Decorative',serif;font-size:18px;font-weight:900;color:var(--bone);letter-spacing:.18em}
+.ctx{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ash);border-left:1px solid var(--rule);padding-left:14px}
+@media(max-width:680px){.ctx{display:none}}
+.right{margin-left:auto;display:flex;gap:8px}
+.tb{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--parch);background:var(--slab);border:1px solid var(--iron);padding:9px 13px;cursor:pointer;transition:.16s;font-family:inherit}
+.tb:hover{color:var(--bone);border-color:var(--steel)}
+.tb.on{color:#fff;background:var(--blood);border-color:rgba(230,74,60,.55)}
+.picker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 16px;flex:0 0 auto;border-bottom:1px solid var(--rule);background:var(--pitch)}
+.lab{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ash);margin-right:2px}
+.ch{font-size:12px;letter-spacing:.1em;color:var(--ash);background:var(--slab);border:1px solid var(--iron);padding:9px 13px;cursor:pointer;transition:.16s;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
+.ch:hover{color:var(--bone);border-color:var(--steel)}
+.ch.sel{color:var(--bone);border-color:var(--ember);box-shadow:inset 0 -2px 0 var(--ember)}
+.ch .dot{width:6px;height:6px;border-radius:50%;background:var(--steel)}
+.ch.sel .dot{background:var(--ember-lit);box-shadow:0 0 8px var(--ember-lit)}
+.ch .tag{font-size:9px;letter-spacing:.16em;color:var(--blood-lit);text-transform:uppercase}
+.spacer{flex:1 1 auto}
+.stage{flex:1 1 auto;display:flex;min-height:0}
+.grid{flex:1 1 auto;display:grid;gap:2px;padding:2px;min-height:0}
+.cell{position:relative;background:#000;min-height:0;overflow:hidden}
+.cell iframe{width:100%;height:100%;border:0;display:block}
+.cell .cap{position:absolute;top:0;left:0;z-index:2;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#fff;background:var(--blood);padding:5px 10px;pointer-events:none}
+.chat{width:330px;flex:0 0 auto;border-left:1px solid var(--rule);background:#0b0c0e;display:none}
+.chat.on{display:block}
+.chat iframe{width:100%;height:100%;border:0;display:block}
+@media(max-width:900px){.chat{display:none!important}}
+.empty{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;gap:14px}
+.empty img{width:clamp(110px,18vw,168px);opacity:.9;filter:drop-shadow(0 0 26px rgba(224,145,43,.2))}
+.empty h2{font-family:Cinzel,serif;font-size:clamp(20px,3.6vw,30px);font-weight:900;color:var(--bone);margin:0;letter-spacing:.04em}
+.empty p{color:var(--ash);max-width:44ch;margin:0;font-size:13px;line-height:1.7;letter-spacing:.06em}
+.foot{flex:0 0 auto;padding:10px 16px;border-top:1px solid var(--rule);background:var(--pitch);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.foot a{color:var(--ash)}
+.foot a:hover{color:var(--bone)}
 </style>
 </head>
 <body>
 
-<div id="bar">
-  <div class="l">
-    <a href="/"><img src="/img/hige-white.png" alt="HIGE"></a>
-    <span class="ttl">Watch</span>
-    <span class="live"><span class="rd"></span><span id="liveTxt">&mdash; shown</span></span>
-  </div>
-  <div class="r">
-    <button class="tb on" id="pickBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      <span>Pick Streams</span>
-    </button>
-    <button class="tb" id="chatBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span>Chat</span>
-    </button>
+<div class="bar">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px">
+    <img class="crest" src="img/hige-seal.webp" alt="HIGE" width="320" height="320">
+    <span class="wm">HIGE</span>
+  </a>
+  <span class="ctx">Multi-Stream · NA Central</span>
+  <div class="right">
+    <button class="tb" id="chatBtn" type="button">Chat</button>
+    <a class="tb" href="index.html">← Site</a>
   </div>
 </div>
 
-<div id="app">
-  <div id="stage"><div id="grid"></div></div>
-  <aside id="chat">
-    <div class="chh"><span class="t">Chat</span>
-      <select id="chatSel" aria-label="Choose chat channel"></select></div>
-    <iframe id="chatFrame" title="Twitch chat"></iframe>
-  </aside>
+<div class="picker" id="picker">
+  <span class="lab">Channels</span>
+  <span class="spacer"></span>
+  <button class="tb" id="allBtn" type="button">All</button>
+  <button class="tb" id="noneBtn" type="button">None</button>
 </div>
 
-<div id="pick">
-  <div class="pbox">
-    <h2>Pick Streams</h2>
-    <p class="psub">Choose who to watch. The grid resizes to fit &mdash; pick two, get two side by side; pick six, get a 3&times;2. Saved to this browser.</p>
-    <div id="prows"></div>
-    <div class="pfoot">
-      <button class="tb" id="selAll">All</button>
-      <button class="tb" id="selNone">None</button>
-      <button class="tb on" id="pickDone" style="flex:2">Done</button>
-    </div>
-  </div>
+<div class="stage">
+  <div class="grid" id="grid"></div>
+  <div class="chat" id="chat"></div>
 </div>
 
-<div class="hint" id="hint">Streams start muted &mdash; unmute the one you want to hear</div>
+<div class="foot">
+  <span>Streams open muted · unmute the one you want</span>
+  <span>Picks saved on this device</span>
+  <a href="index.html#endtimes">End Times 24.09</a>
+  <a href="index.html">HIGE.GG</a>
+</div>
 
 <script>
-const CREW = [{"n": "Soot", "s": "HIGEsoot", "t": "Curiomaster"}, {"n": "Kody", "s": "KodyCQ", "t": "Scholar"}, {"n": "Tat", "s": "higetat", "t": "Cajun Skald"}, {"n": "Jibbish", "s": "HIGEJibbish", "t": "Ribbonmaster"}, {"n": "Quijibo", "s": "HIGEQuijibo", "t": "Duke of Disc Golf"}, {"n": "CapinCrunch", "s": "higecapin", "t": "The Boyer 23"}, {"n": "Grim", "s": "grimwolf36", "t": "SleazyBearShark"}];
-const PARENTS = [location.hostname,'hige.gg','www.hige.gg','localhost'].filter((v,i,a)=>v&&a.indexOf(v)===i);
-const PQ = PARENTS.map(p=>'parent='+encodeURIComponent(p)).join('&');
-const grid=document.getElementById('grid'), stage=document.getElementById('stage');
-const chat=document.getElementById('chat'), chatSel=document.getElementById('chatSel'), chatFrame=document.getElementById('chatFrame');
-const liveTxt=document.getElementById('liveTxt');
+(function(){
+  var CHANNELS = [
+    {id:'HIGEsoot',    name:'Soot',    tag:'Active'},
+    {id:'KodyCQ',      name:'Kody',    tag:'Active'},
+    {id:'HIGEJibbish', name:'Jibbish', tag:''},
+    {id:'higetat',     name:'Tat',     tag:''},
+    {id:'grimwolf36',  name:'Grim',    tag:''},
+    {id:'HIGEQuijibo', name:'Quijibo', tag:''},
+    {id:'higecapin',   name:'Capin',   tag:''}
+  ];
+  var KEY='hige.watch.v3';
+  var parent = location.hostname || 'hige.gg';
+  var picked=[], chatOn=false;
 
-const LS='hige-watch-sel';
-let sel=(()=>{try{const v=JSON.parse(localStorage.getItem(LS));if(Array.isArray(v))return v;}catch(_){}return CREW.map(c=>c.s);})();
+  try{
+    var s=JSON.parse(localStorage.getItem(KEY)||'null');
+    if(s&&Array.isArray(s.picked)) picked=s.picked.filter(function(id){return CHANNELS.some(function(c){return c.id===id;});});
+    if(s&&typeof s.chat==='boolean') chatOn=s.chat;
+  }catch(e){}
+  if(!picked.length) picked=['HIGEsoot','KodyCQ'];
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify({picked:picked,chat:chatOn})); }catch(e){} }
 
-/* choose column count from stream count + viewport */
-function cols(n){
-  const wide = innerWidth > 560;
-  if(!wide) return 1;
-  if(n<=1) return 1;
-  if(n<=2) return 2;
-  if(n<=4) return 2;
-  if(n<=6) return 3;
-  if(n<=9) return 3;
-  return 4;
-}
-function embed(login){return 'https://player.twitch.tv/?channel='+encodeURIComponent(login)+'&'+PQ+'&muted=true&autoplay=true';}
+  var picker=document.getElementById('picker'), grid=document.getElementById('grid'),
+      chat=document.getElementById('chat'), chatBtn=document.getElementById('chatBtn'),
+      spacer=picker.querySelector('.spacer');
 
-function render(){
-  const list = CREW.filter(c=>sel.includes(c.s));
-  liveTxt.textContent = list.length + ' / ' + CREW.length + ' shown';
-  if(!list.length){
-    grid.style.gridTemplateColumns='1fr';
-    grid.innerHTML='<div class="empty"><div class="inner"><div class="big">No streams picked</div>'+
-      '<p>Hit <b>Pick Streams</b> and choose who you want to watch. The layout builds itself around your picks.</p>'+
-      '<button class="tb on" onclick="document.getElementById(\'pickBtn\').click()" style="margin:0 auto;display:inline-flex">Pick Streams</button></div></div>';
-    buildChatSel([]); return;
-  }
-  const c = cols(list.length);
-  grid.style.gridTemplateColumns='repeat('+c+',1fr)';
-  grid.innerHTML = list.map(m =>
-    '<div class="cell">'+
-      '<div class="ch"><span class="nm"><span class="rd"></span>'+m.n+'</span><div class="ct">'+
-      '<button title="Open on Twitch" onclick="window.open(\'https://twitch.tv/'+m.s+'\',\'_blank\',\'noopener\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></button>'+
-      '<button title="Remove" data-hide="'+m.s+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>'+
-      '</div></div>'+
-      '<iframe src="'+embed(m.s)+'" allowfullscreen title="'+m.n+' stream"></iframe>'+
-    '</div>').join('');
-  buildChatSel(list);
-}
-
-function buildChatSel(list){
-  const cur=chatSel.value;
-  chatSel.innerHTML=list.map(c=>'<option value="'+c.s+'">'+c.n+'</option>').join('');
-  const pick=list.some(c=>c.s===cur)?cur:(list[0]&&list[0].s);
-  if(pick){chatSel.value=pick; setChat(pick);} else chatFrame.removeAttribute('src');
-}
-function setChat(login){chatFrame.src='https://www.twitch.tv/embed/'+encodeURIComponent(login)+'/chat?darkpopout&'+PQ;}
-chatSel.addEventListener('change',()=>setChat(chatSel.value));
-
-grid.addEventListener('click',e=>{
-  const h=e.target.closest('[data-hide]');
-  if(h){sel=sel.filter(s=>s!==h.dataset.hide); save(); render(); syncPicker();}
-});
-
-document.getElementById('chatBtn').addEventListener('click',function(){
-  chat.classList.toggle('hidden'); this.classList.toggle('on',!chat.classList.contains('hidden'));
-});
-document.getElementById('chatBtn').classList.add('on');
-
-/* PICKER */
-const pick=document.getElementById('pick'), prows=document.getElementById('prows');
-prows.innerHTML=CREW.map(c=>
-  '<label class="prow" data-s="'+c.s+'"><input type="checkbox" value="'+c.s+'">'+
-  '<span class="info"><span class="n">'+c.n+'</span><span class="tt">'+c.t+'</span></span></label>'
-).join('');
-function syncPicker(){
-  prows.querySelectorAll('input').forEach(i=>{
-    i.checked=sel.includes(i.value); i.closest('.prow').classList.toggle('sel',i.checked);
+  CHANNELS.forEach(function(c){
+    var b=document.createElement('button');
+    b.type='button'; b.className='ch'; b.dataset.id=c.id;
+    b.innerHTML='<span class="dot"></span>'+c.name+(c.tag?' <span class="tag">'+c.tag+'</span>':'');
+    b.addEventListener('click',function(){
+      var i=picked.indexOf(c.id);
+      if(i>-1) picked.splice(i,1); else picked.push(c.id);
+      save(); render();
+    });
+    picker.insertBefore(b,spacer);
   });
-}
-prows.addEventListener('change',e=>{
-  const v=e.target.value;
-  if(e.target.checked){if(!sel.includes(v))sel.push(v);} else sel=sel.filter(s=>s!==v);
-  e.target.closest('.prow').classList.toggle('sel',e.target.checked); save();
-});
-function save(){try{localStorage.setItem(LS,JSON.stringify(sel));}catch(_){}}
-function openPick(){syncPicker(); pick.classList.add('open');}
-function closePick(){pick.classList.remove('open'); render();}
-document.getElementById('pickBtn').addEventListener('click',openPick);
-document.getElementById('pickDone').addEventListener('click',closePick);
-document.getElementById('selAll').addEventListener('click',()=>{sel=CREW.map(c=>c.s);save();syncPicker();});
-document.getElementById('selNone').addEventListener('click',()=>{sel=[];save();syncPicker();});
-pick.addEventListener('click',e=>{if(e.target===pick)closePick();});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&pick.classList.contains('open'))closePick();});
+  document.getElementById('allBtn').addEventListener('click',function(){ picked=CHANNELS.map(function(c){return c.id;}); save(); render(); });
+  document.getElementById('noneBtn').addEventListener('click',function(){ picked=[]; save(); render(); });
+  chatBtn.addEventListener('click',function(){ chatOn=!chatOn; save(); render(); });
 
-let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(render,180);},{passive:true});
+  function layout(n){
+    if(n<=1) return [1,1];
+    if(n===2) return [2,1];
+    if(n<=4) return [2,2];
+    if(n<=6) return [3,2];
+    if(n<=9) return [3,3];
+    return [4,Math.ceil(n/4)];
+  }
 
-render();
-const hint=document.getElementById('hint');
-setTimeout(()=>hint.classList.add('show'),1200);
-setTimeout(()=>hint.classList.remove('show'),7000);
+  function render(){
+    picker.querySelectorAll('.ch').forEach(function(b){ b.classList.toggle('sel', picked.indexOf(b.dataset.id)>-1); });
+    chatBtn.classList.toggle('on', chatOn);
+
+    chat.classList.toggle('on', chatOn && picked.length>0);
+    if(chatOn && picked[0]){
+      var want='https://www.twitch.tv/embed/'+picked[0]+'/chat?parent='+parent+'&darkpopout';
+      var f=chat.querySelector('iframe');
+      if(!f){ f=document.createElement('iframe'); chat.appendChild(f); }
+      if(f.getAttribute('src')!==want) f.setAttribute('src',want);
+    } else { chat.innerHTML=''; }
+
+    if(!picked.length){
+      grid.style.gridTemplateColumns='1fr'; grid.style.gridTemplateRows='1fr';
+      grid.innerHTML='<div class="empty"><img src="img/hige-logo.webp" alt="HIGE.GG"><h2>Pick Your Angles</h2>'+
+        '<p>Any combination of channels above. Two gets you side by side, six gets you a 3&times;2. Everything starts muted.</p></div>';
+      return;
+    }
+
+    var d=layout(picked.length);
+    grid.style.gridTemplateColumns='repeat('+d[0]+',1fr)';
+    grid.style.gridTemplateRows='repeat('+d[1]+',1fr)';
+
+    var have={};
+    Array.prototype.slice.call(grid.children).forEach(function(el){ if(el.dataset&&el.dataset.id) have[el.dataset.id]=el; });
+    grid.innerHTML='';
+    picked.forEach(function(id){
+      var cell=have[id];
+      if(!cell){
+        var meta=CHANNELS.filter(function(c){return c.id===id;})[0]||{name:id};
+        cell=document.createElement('div'); cell.className='cell'; cell.dataset.id=id;
+        var cap=document.createElement('span'); cap.className='cap'; cap.textContent=meta.name;
+        var f=document.createElement('iframe');
+        f.setAttribute('allowfullscreen',''); f.setAttribute('title',meta.name+' on Twitch');
+        f.src='https://player.twitch.tv/?channel='+id+'&parent='+parent+'&muted=true&autoplay=true';
+        cell.appendChild(cap); cell.appendChild(f);
+      }
+      grid.appendChild(cell);
+    });
+  }
+
+  try{ render(); }
+  catch(err){
+    grid.innerHTML='<div class="empty"><h2>Stream grid hiccup</h2><p>Watch direct on '+
+      '<a href="https://twitch.tv/HIGEsoot" style="color:#e64a3c">HIGEsoot</a> or '+
+      '<a href="https://twitch.tv/KodyCQ" style="color:#e64a3c">KodyCQ</a>.</p></div>';
+  }
+})();
 </script>
 </body>
 </html>
