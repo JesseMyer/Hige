@@ -221,6 +221,35 @@ section{padding:clamp(56px,8vw,100px) 0;position:relative;scroll-margin-top:64px
 .cd b{display:block;font:900 27px/1 Cinzel,serif;color:var(--bone);font-variant-numeric:tabular-nums}
 .cd i{font-style:normal;font:400 9px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);display:block;margin-top:6px}
 
+/* ---------- end times feature split ---------- */
+.et-split{display:grid;grid-template-columns:.42fr .58fr;gap:clamp(16px,2.4vw,30px);align-items:start}
+@media(max-width:860px){.et-split{grid-template-columns:1fr}}
+.poster{position:relative;overflow:hidden;border:1px solid var(--iron);background:#05070a}
+.poster img{width:100%;height:clamp(360px,50vh,580px);object-fit:cover;object-position:50% 20%;display:block;transition:transform 1.1s var(--ease)}
+.poster:hover img{transform:scale(1.04)}
+.poster figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;
+  background:linear-gradient(transparent,rgba(5,7,10,.95));
+  font:400 9.5px/1.5 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+
+/* ---------- field notes band ---------- */
+.field{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.2vw,14px)}
+@media(max-width:1000px){.field{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.field{grid-template-columns:1fr}}
+.shotcard{position:relative;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);margin:0;
+  transition:transform .4s var(--ease),border-color .3s,box-shadow .4s var(--ease)}
+.shotcard:hover{transform:translateY(-6px);border-color:var(--ember);box-shadow:0 26px 54px -26px rgba(0,0,0,.95)}
+.shotcard img{width:100%;height:100%;aspect-ratio:16/9;object-fit:cover;transition:transform .8s var(--ease);filter:saturate(.9)}
+.shotcard:hover img{transform:scale(1.06)}
+.shotcard figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px;
+  background:linear-gradient(transparent,rgba(8,9,11,.95));
+  font:400 9.5px/1.5 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--parch)}
+
+/* ---------- booth ---------- */
+.booth-art{border:1px solid var(--iron);overflow:hidden;margin:0 0 12px}
+.booth-art img{width:100%;height:auto;display:block;filter:saturate(.85) contrast(1.05)}
+.booth-art figcaption{padding:9px 12px;background:var(--pitch);border-top:1px solid var(--iron);
+  font:400 9px/1.5 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+
 /* ---------- lab ---------- */
 .lab{border:1px solid var(--iron);background:linear-gradient(170deg,var(--slab),var(--pitch));overflow:hidden;position:relative}
 .lab-art img{width:100%;height:auto;display:block;border-bottom:1px solid var(--iron)}
@@ -239,8 +268,8 @@ section{padding:clamp(56px,8vw,100px) 0;position:relative;scroll-margin-top:64px
 /* ---------- dynasty ---------- */
 .dyn-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(12px,1.6vw,18px)}
 @media(max-width:900px){.dyn-wrap{grid-template-columns:1fr}}
-.vid{position:relative;border:1px solid var(--iron);background:#000;overflow:hidden}
-.vid video{width:100%;height:100%;display:block;object-fit:cover;aspect-ratio:16/9}
+.vid{position:relative;border:1px solid var(--iron);background:#000;overflow:hidden;align-self:start}
+.vid video{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
 .vid figcaption{position:absolute;left:0;bottom:0;right:0;padding:12px 14px;pointer-events:none;
   background:linear-gradient(transparent,rgba(8,9,11,.94));font:400 10px/1.4 'Share Tech Mono',monospace;
   letter-spacing:.18em;text-transform:uppercase;color:var(--parch)}
@@ -259,12 +288,13 @@ section{padding:clamp(56px,8vw,100px) 0;position:relative;scroll-margin-top:64px
 .ecu img{width:100%;height:auto;display:block}
 
 /* ---------- hall: horizontal rail + lightbox ---------- */
-.rail-x{display:flex;align-items:flex-start;gap:clamp(12px,1.6vw,18px);overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:4px 0 20px;scrollbar-width:thin;scrollbar-color:var(--iron) transparent;perspective:1400px;cursor:grab}
-.rail-x::-webkit-scrollbar{height:6px}
-.rail-x::-webkit-scrollbar-thumb{background:var(--iron)}
+.rail-x{display:flex;align-items:flex-start;gap:clamp(12px,1.6vw,18px);overflow-x:auto;
+  padding:4px 0 20px;scrollbar-width:none;perspective:1400px;cursor:grab;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 40px,#000 calc(100% - 40px),transparent)}
+.rail-x::-webkit-scrollbar{display:none}
 .frame{position:relative;flex:0 0 auto;width:auto;height:clamp(280px,44vh,430px);max-width:min(640px,80vw);
-  scroll-snap-align:start;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);cursor:zoom-in;
+  overflow:hidden;border:1px solid var(--iron);background:var(--pitch);cursor:zoom-in;
   transition:transform .4s var(--ease),border-color .3s,box-shadow .4s var(--ease);margin:0}
 .frame:hover{transform:translateY(-8px) scale(1.015);border-color:var(--ember);box-shadow:0 30px 60px -28px rgba(0,0,0,.95)}
 .frame img{height:100%;width:auto;max-width:none;object-fit:cover;transition:transform .8s var(--ease);filter:saturate(.95)}
@@ -347,6 +377,7 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
 
 <nav class="rail" id="rail" aria-label="Section index">
   <a href="#wardogs"><i>Wardogs</i><s></s></a>
+  <a href="#field"><i>Field</i><s></s></a>
   <a href="#endtimes"><i>End Times</i><s></s></a>
   <a href="#board"><i>The Board</i><s></s></a>
   <a href="#dynasty"><i>Dynasty</i><s></s></a>
@@ -364,6 +395,7 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
     </a>
     <nav>
       <a href="#wardogs">Wardogs</a>
+      <a href="#field">Field</a>
       <a href="#endtimes">End Times</a>
       <a href="#board">The Board</a>
       <a href="#dynasty">Dynasty</a>
@@ -452,6 +484,22 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
   </div>
 </section>
 
+<!-- ================= FIELD NOTES ================= -->
+<section id="field" style="padding-top:0">
+  <div class="wrap">
+    <div class="head rv">
+      <div><p class="eye">Wardogs · From the Field</p><h2>Contact Reports</h2></div>
+      <p>Screenshots off the crew's own screens. NA Central, tagged &lt;HIGE&gt;, mostly going well.</p>
+    </div>
+    <div class="field rv">
+      <figure class="shotcard"><img src="img/wd-grass.webp" alt="Prone in the grass beside a body" loading="lazy" decoding="async" width="1200" height="675"><figcaption>Prone in the weeds · JaeDaedae one metre out</figcaption></figure>
+      <figure class="shotcard"><img src="img/wd-scope.webp" alt="Enemy through a 4x scope" loading="lazy" decoding="async" width="1200" height="675"><figcaption>Glass on him at three metres · "safe zone"</figcaption></figure>
+      <figure class="shotcard"><img src="img/wd-truck.webp" alt="Full squad inside a truck" loading="lazy" decoding="async" width="1200" height="675"><figcaption>Full truck, control Manticore, 2.5 km to HQ</figcaption></figure>
+      <figure class="shotcard"><img src="img/wd-tree.webp" alt="A Ural truck standing vertically in a tree" loading="lazy" decoding="async" width="1200" height="675"><figcaption>The Ural found a tree · Soot was driving</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <!-- ================= END TIMES ================= -->
 <section id="endtimes" style="padding-top:0">
   <div class="wrap">
@@ -461,7 +509,13 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
       <div class="body" style="min-height:auto">
         <p class="sub">Four Lords · One Apocalypse</p>
         <h3 style="font-size:clamp(20px,2.6vw,32px)">Who We're Taking</h3>
-        <div class="lords">
+        <div class="et-split" style="margin-top:20px">
+        <figure class="poster" style="margin:0">
+          <img src="img/nagash-art.webp" alt="Nagash, Supreme Lord of the Undead" loading="lazy" decoding="async" width="820" height="1448">
+          <figcaption>Nagash · Supreme Lord of the Undead</figcaption>
+        </figure>
+        <div>
+        <div class="lords" style="margin-top:0">
           <div class="lord"><img src="img/lord-nagash.webp" alt="Nagash" loading="lazy" decoding="async" width="460" height="215"><span>Nagash · Undead</span></div>
           <div class="lord"><img src="img/lord-thanquol.webp" alt="Grey Seer Thanquol" loading="lazy" decoding="async" width="460" height="215"><span>Thanquol · Skaven</span></div>
           <div class="lord"><img src="img/lord-boris.webp" alt="Boris Todbringer" loading="lazy" decoding="async" width="460" height="215"><span>Todbringer · Empire</span></div>
@@ -472,6 +526,8 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
           <div><b>Chaos Invasion</b><i>Endgame</i></div>
           <div><b>Vermintide</b><i>Endgame</i></div>
           <div><b>Nagash Rises</b><i>Endgame</i></div>
+        </div>
+        </div>
         </div>
       </div>
     </div>
@@ -486,7 +542,7 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
     <div class="tiles trio">
 
       <a class="tile mid rv tilt" href="#wardogs">
-        <div class="shot"><img src="img/wardogs-4.webp" alt="WARDOGS" loading="lazy" decoding="async" width="880" height="495"></div>
+        <div class="shot"><img src="img/wd-tree.webp" alt="WARDOGS" loading="lazy" decoding="async" width="1200" height="675"></div>
         <div class="flag"><b>Live Now</b></div>
         <div class="body">
           <p class="sub">Everyone but Kody and Harold</p>
@@ -573,6 +629,10 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
           <span><b>ECU Pirates</b><i>Pugh</i><i class="rk">Top 6</i></span>
         </div>
         <div class="booth">
+          <figure class="booth-art">
+            <img src="img/booth-cage.webp" alt="Side by side resemblance gag" loading="lazy" decoding="async" width="739" height="415">
+            <figcaption>The eternal HIGE debate · same guy? · unresolved since 1995</figcaption>
+          </figure>
           <p>"The team that scores more points is gonna have a real good chance to win this football game."</p>
           <p>"You can't lose if they don't score. That's just math, and math is football."</p>
           <span>Booth wisdom · volume up</span>
@@ -647,7 +707,7 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
 
     <div class="tiles duo">
       <a class="tile sm rv tilt" href="https://twitch.tv/HIGEsoot" target="_blank" rel="noopener">
-        <div class="shot"><img src="img/wardogs-4.webp" alt="" loading="lazy" decoding="async" width="880" height="495"></div>
+        <div class="shot"><img src="img/wd-truck.webp" alt="" loading="lazy" decoding="async" width="1200" height="675"></div>
         <div class="flag"><b>Active</b></div>
         <div class="body">
           <p class="sub">twitch.tv/HIGEsoot</p>
@@ -881,59 +941,122 @@ section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
       });
     });
 
-    /* ---- hall: drag to scroll + lightbox ---- */
+    /* ---- hall: auto-running carousel + drag + lightbox ---- */
     var railx = document.getElementById('hallRail');
+    var ITEMS = [], lbxOpen = false;
+
     if(railx){
-      var down=false, sx=0, sl=0, moved=0;
+      var originals = [].slice.call(railx.children);
+
+      originals.forEach(function(fig, i){
+        var cap = fig.querySelector('figcaption');
+        var bEl = cap ? cap.querySelector('b') : null;
+        var title = bEl ? bEl.textContent : '';
+        var sub = '';
+        if(cap){
+          var clone = cap.cloneNode(true);
+          var b2 = clone.querySelector('b'); if(b2) b2.remove();
+          sub = clone.textContent.trim();
+        }
+        ITEMS.push({
+          src: fig.getAttribute('data-full') || fig.querySelector('img').getAttribute('src'),
+          alt: fig.querySelector('img').getAttribute('alt') || title,
+          title: title, sub: sub
+        });
+        fig.dataset.i = i;
+      });
+
+      /* duplicate the set so the loop never shows a seam */
+      originals.forEach(function(fig){
+        var c = fig.cloneNode(true);
+        c.setAttribute('aria-hidden','true');
+        railx.appendChild(c);
+      });
+
+      var paused = false, dragging = false, down = false, sx = 0, sl = 0, moved = 0;
+      var SPEED = 0.42;          /* px per frame, deliberately slow */
+      var last = 0, pos = railx.scrollLeft;   /* float accumulator: scrollLeft alone rounds away small steps */
+
+      function loop(t){
+        var dt = last ? Math.min(48, t - last) : 16;
+        last = t;
+        var half = railx.scrollWidth / 2;
+        if(!paused && !dragging && !lbxOpen && !document.hidden && !reduce && half > 0){
+          pos += SPEED * (dt / 16.67);
+          if(pos >= half) pos -= half;
+          railx.scrollLeft = pos;
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      railx.addEventListener('pointerenter', function(){ paused = true; });
+      railx.addEventListener('pointerleave', function(){ paused = false; down = false; dragging = false; pos = railx.scrollLeft; railx.style.cursor=''; });
+      railx.addEventListener('scroll', function(){ if(paused || dragging) pos = railx.scrollLeft; }, {passive:true});
+      railx.addEventListener('focusin',  function(){ paused = true; });
+      railx.addEventListener('focusout', function(){ paused = false; });
+
       railx.addEventListener('pointerdown', function(e){
-        down=true; moved=0; sx=e.clientX; sl=railx.scrollLeft; railx.style.cursor='grabbing';
+        down = true; dragging = false; moved = 0; sx = e.clientX; sl = railx.scrollLeft;
+        railx.style.cursor = 'grabbing';
       });
       railx.addEventListener('pointermove', function(e){
         if(!down) return;
-        var dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx));
-        railx.scrollLeft = sl - dx;
+        var dx = e.clientX - sx;
+        moved = Math.max(moved, Math.abs(dx));
+        if(moved > 4) dragging = true;
+        var half2 = railx.scrollWidth / 2;
+        var next = sl - dx;
+        if(half2 > 0){
+          if(next >= half2) next -= half2;
+          if(next < 0) next += half2;
+        }
+        railx.scrollLeft = next;
+        pos = next;
       });
-      ['pointerup','pointerleave','pointercancel'].forEach(function(ev){
-        railx.addEventListener(ev, function(){ down=false; railx.style.cursor=''; });
+      ['pointerup','pointercancel'].forEach(function(ev){
+        railx.addEventListener(ev, function(){ down = false; railx.style.cursor=''; setTimeout(function(){ dragging = false; }, 40); });
       });
+
+      railx.addEventListener('click', function(e){
+        var fig = e.target.closest ? e.target.closest('.frame') : null;
+        if(!fig || moved > 6) return;
+        show(parseInt(fig.dataset.i, 10) || 0);
+      });
+      railx.addEventListener('keydown', function(e){
+        if(e.key !== 'Enter' && e.key !== ' ') return;
+        var fig = e.target.closest ? e.target.closest('.frame') : null;
+        if(!fig) return;
+        e.preventDefault();
+        show(parseInt(fig.dataset.i, 10) || 0);
+      });
+      [].slice.call(railx.querySelectorAll('.frame')).forEach(function(fig){ fig.setAttribute('tabindex','0'); });
     }
 
-    var frames = [].slice.call(document.querySelectorAll('.frame'));
     var lbx = document.getElementById('lbx');
     var lImg = document.getElementById('lbxImg'), lT = document.getElementById('lbxTitle'),
         lS = document.getElementById('lbxSub'), lC = document.getElementById('lbxCount');
     var idx = 0;
 
     function show(i){
-      if(!frames.length) return;
-      idx = (i + frames.length) % frames.length;
-      var f = frames[idx];
-      var cap = f.querySelector('figcaption');
-      var title = cap ? (cap.querySelector('b') ? cap.querySelector('b').textContent : '') : '';
-      var sub = '';
-      if(cap){
-        var clone = cap.cloneNode(true);
-        var b = clone.querySelector('b'); if(b) b.remove();
-        sub = clone.textContent.trim();
-      }
-      lImg.src = f.getAttribute('data-full') || f.querySelector('img').src;
-      lImg.alt = f.querySelector('img').alt || title;
-      lT.textContent = title;
-      lS.textContent = sub;
-      lC.textContent = (idx+1)+' / '+frames.length;
+      if(!ITEMS.length) return;
+      idx = (i + ITEMS.length) % ITEMS.length;
+      var it = ITEMS[idx];
+      lImg.src = it.src;
+      lImg.alt = it.alt;
+      lT.textContent = it.title;
+      lS.textContent = it.sub;
+      lC.textContent = (idx+1)+' / '+ITEMS.length;
       lbx.classList.add('on');
+      lbxOpen = true;
       document.body.style.overflow = 'hidden';
     }
     function hide(){
       lbx.classList.remove('on');
+      lbxOpen = false;
       document.body.style.overflow = '';
       lImg.removeAttribute('src');
     }
-    frames.forEach(function(f,i){
-      f.addEventListener('click', function(){ show(i); });
-      f.setAttribute('tabindex','0');
-      f.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); show(i); } });
-    });
     document.getElementById('lbxClose').addEventListener('click', hide);
     document.getElementById('lbxPrev').addEventListener('click', function(e){ e.stopPropagation(); show(idx-1); });
     document.getElementById('lbxNext').addEventListener('click', function(e){ e.stopPropagation(); show(idx+1); });
