@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>HIGE.GG</title>
-<meta name="description" content="HIGE. Est. 1995. Thirty years deep. WARDOGS on NA Central, Lords of the End Times, Civ VII, Hero Siege, NCAA Dynasty, EverQuest Legends. Multi-stream live.">
+<meta name="description" content="HIGE. Est. 1995. WARDOGS on NA Central, Lords of the End Times, EverQuest Legends, NCAA Dynasty. Multi-stream live.">
 <meta name="theme-color" content="#08090b">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://hige.gg/">
@@ -22,16 +22,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@700;900&family=Spectral:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-/* ===== HIGE.GG 2026 ===== */
+/* ============================================================
+   HIGE.GG : structural grid + depth system
+   ============================================================ */
 :root{
   --void:#08090b; --pitch:#0d0f12; --slab:#14171c; --slab2:#1b2027;
   --iron:#272d36; --steel:#49525f; --ash:#8b8778; --bone:#ece5d5; --parch:#c9c2b0;
   --ember:#e0912b; --ember-lit:#ffb648; --blood:#b8232b; --blood-lit:#e64a3c;
   --plague:#94a63f; --frost:#6f9ab0;
   --rule:rgba(236,229,213,.13);
+  --grid:rgba(236,229,213,.055);
   --pad:clamp(16px,4vw,26px);
-  --maxw:1240px;
-  --r:2px;
+  --maxw:1280px;
+  --ease:cubic-bezier(.2,.7,.3,1);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -40,136 +43,188 @@ body{
   font:400 17px/1.6 Spectral,Georgia,serif;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-/* film grain + vignette, GPU-cheap */
-body::after{
-  content:"";position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.5;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.055'/></svg>");
-  mix-blend-mode:overlay;
-}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
 h1,h2,h3,h4{margin:0;font-family:Cinzel,serif;font-weight:900;letter-spacing:.01em;color:var(--bone);line-height:1.04}
 .mono{font-family:'Share Tech Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);position:relative}
+
+/* ---------- structural grid + grain (fixed, behind everything) ---------- */
+.rig{position:fixed;inset:0;z-index:0;pointer-events:none}
+.rig .cols{
+  position:absolute;inset:0;max-width:var(--maxw);margin:0 auto;
+  background-image:linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:calc(100% / 4) 100%;
+  opacity:.9;
+}
+.rig .cols::after{content:"";position:absolute;inset:0;border-left:1px solid var(--grid);border-right:1px solid var(--grid)}
+.rig .rows{position:absolute;inset:0;background-image:linear-gradient(0deg,var(--grid) 1px,transparent 1px);background-size:100% 220px}
+.rig .grain{
+  position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.055'/></svg>");
+}
+.rig .glow{
+  position:absolute;inset:0;
+  background:radial-gradient(60% 45% at 50% 0%, rgba(224,145,43,.10), transparent 70%);
+}
+main,header,footer,.ticker{position:relative;z-index:1}
+
+/* ---------- scroll progress ---------- */
+.prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:90;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--blood),var(--ember-lit));pointer-events:none}
 
 /* ---------- nav ---------- */
-.nav{position:sticky;top:0;z-index:70;background:rgba(8,9,11,.82);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--rule)}
-.nav-in{display:flex;align-items:center;gap:14px;height:60px;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
-.nav .crest{width:34px;height:auto;filter:drop-shadow(0 0 10px rgba(224,145,43,.35))}
-.nav .wm{font-family:'Cinzel Decorative',serif;font-size:19px;font-weight:900;color:var(--bone);letter-spacing:.18em}
-@media(max-width:560px){.nav .wm{display:none}.nav nav{gap:16px}}
+.nav{position:sticky;top:0;z-index:70;background:rgba(8,9,11,.78);backdrop-filter:blur(16px) saturate(1.25);border-bottom:1px solid var(--rule)}
+.nav-in{display:flex;align-items:center;gap:14px;height:62px;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
 .nav-in>a{flex:0 0 auto}
+.nav .crest{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(224,145,43,.35));transition:transform .4s var(--ease)}
+.nav-in>a:hover .crest{transform:rotate(-8deg) scale(1.06)}
+.nav .wm{font-family:'Cinzel Decorative',serif;font-size:19px;font-weight:900;color:var(--bone);letter-spacing:.18em}
+@media(max-width:560px){.nav .wm{display:none}}
 .nav nav{margin-left:auto;display:flex;gap:17px;align-items:center;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav nav::-webkit-scrollbar{display:none}
 @media(max-width:1180px){.nav nav{
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 4px),transparent);
   mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 4px),transparent)}}
-.nav nav::-webkit-scrollbar{display:none}
-.nav nav a{font:600 10.5px/1 'Share Tech Mono',monospace;letter-spacing:.17em;text-transform:uppercase;color:var(--ash);white-space:nowrap;padding:8px 0;border-bottom:1px solid transparent;transition:color .16s,border-color .16s}
-.nav nav a:hover{color:var(--bone);border-bottom-color:var(--ember)}
-.live-btn{flex:0 0 auto}
-.live-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:9px 15px;background:var(--blood);color:#fff!important;
-  font:700 11px/1 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;border-bottom:0!important;
-  clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);transition:background .16s,transform .16s;
-}
-.live-btn:hover{background:var(--blood-lit);transform:translateY(-1px)}
+.nav nav a{position:relative;font:600 10.5px/1 'Share Tech Mono',monospace;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--ash);white-space:nowrap;padding:8px 0;transition:color .18s}
+.nav nav a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--ember);transition:right .3s var(--ease)}
+.nav nav a:hover{color:var(--bone)}
+.nav nav a:hover::after{right:0}
+.live-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:var(--blood);color:#fff!important;
+  font:700 11px/1 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;
+  clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);
+  transition:background .18s,transform .18s var(--ease)}
+.live-btn:hover{background:var(--blood-lit);transform:translateY(-2px)}
 .live-btn::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;animation:blip 1.6s infinite}
 @keyframes blip{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* ---------- hero ---------- */
-.hero{position:relative;min-height:min(88svh,820px);display:grid;place-items:center;text-align:center;overflow:hidden;padding:clamp(60px,10vh,120px) 0 clamp(40px,7vh,80px)}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.04);filter:saturate(.88) contrast(1.08) brightness(1.04)}
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
+/* ---------- section index rail ---------- */
+.rail{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:14px}
+@media(max-width:1100px){.rail{display:none}}
+.rail a{display:flex;align-items:center;gap:9px;justify-content:flex-end;color:var(--steel);transition:color .2s}
+.rail a i{font-style:normal;font:400 9px/1 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;
+  opacity:0;transform:translateX(6px);transition:opacity .25s,transform .25s var(--ease)}
+.rail a s{display:block;width:16px;height:2px;background:currentColor;text-decoration:none;transition:width .25s var(--ease)}
+.rail a:hover,.rail a.on{color:var(--ember-lit)}
+.rail a:hover i,.rail a.on i{opacity:1;transform:none}
+.rail a.on s{width:30px}
+
+/* ---------- brackets ---------- */
+.bk{position:absolute;width:12px;height:12px;border:1px solid var(--ember);opacity:.75;pointer-events:none}
+.bk.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.bk.tr{top:-1px;right:-1px;border-left:0;border-bottom:0}
+.bk.bl{bottom:-1px;left:-1px;border-right:0;border-top:0}
+.bk.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.sq{position:absolute;width:9px;height:9px;background:var(--ember);pointer-events:none}
+
+/* ---------- hero (layered parallax + 3D) ---------- */
+.hero{position:relative;min-height:min(94svh,900px);display:grid;place-items:center;text-align:center;overflow:hidden;
+  padding:clamp(48px,8vh,96px) 0 clamp(36px,6vh,72px);perspective:1200px}
+.hero-l{position:absolute;inset:-8% 0;z-index:0;will-change:transform}
+.hero-l img{width:100%;height:100%;object-fit:cover;object-position:50% 46%;transform:scale(1.08);
+  filter:saturate(.86) contrast(1.1) brightness(1.02)}
+.hero-l::after{content:"";position:absolute;inset:0;
   background:
-    radial-gradient(64% 50% at 50% 44%, rgba(8,9,11,.06), rgba(8,9,11,.62) 68%, rgba(8,9,11,.84) 100%),
-    linear-gradient(180deg, rgba(8,9,11,.62) 0%, rgba(8,9,11,.10) 26%, rgba(8,9,11,.52) 66%, rgba(8,9,11,.94) 88%, var(--void) 100%);
-}
-.hero-in{position:relative;z-index:1;padding-inline:var(--pad);max-width:960px}
-.crest-big{width:clamp(172px,27vw,268px);height:auto;margin:0 auto;filter:drop-shadow(0 12px 44px rgba(0,0,0,.92)) drop-shadow(0 0 34px rgba(224,145,43,.28))}
-.hero h1{font-family:'Cinzel Decorative',serif;font-size:clamp(46px,12vw,124px);letter-spacing:.06em;margin:clamp(10px,2vw,18px) 0 0;text-shadow:0 6px 40px rgba(0,0,0,.9)}
-.hero .kick{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.44em;text-transform:uppercase;color:var(--ember-lit);margin-top:14px}
-.hero p{margin:18px auto 0;max-width:56ch;color:var(--parch);font-size:clamp(16px,2vw,19px);text-shadow:0 2px 14px rgba(0,0,0,.8)}
-.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-.btn{
-  display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border:1px solid var(--iron);
-  background:linear-gradient(160deg,rgba(27,32,39,.9),rgba(13,15,18,.9));backdrop-filter:blur(6px);
+   radial-gradient(62% 48% at 50% 44%, rgba(8,9,11,.04), rgba(8,9,11,.6) 66%, rgba(8,9,11,.86) 100%),
+   linear-gradient(180deg, rgba(8,9,11,.62) 0%, rgba(8,9,11,.08) 26%, rgba(8,9,11,.5) 64%, rgba(8,9,11,.95) 88%, var(--void) 100%)}
+.hero-scan{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 4px);opacity:.35;mix-blend-mode:multiply}
+.hero-in{position:relative;z-index:2;padding-inline:var(--pad);max-width:1000px;transform-style:preserve-3d}
+.crest-big{width:clamp(168px,26vw,262px);height:auto;margin:0 auto;
+  filter:drop-shadow(0 16px 50px rgba(0,0,0,.95)) drop-shadow(0 0 40px rgba(224,145,43,.3));
+  animation:float 7s ease-in-out infinite;will-change:transform}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero h1{font-family:'Cinzel Decorative',serif;font-size:clamp(50px,13vw,132px);letter-spacing:.06em;
+  margin:clamp(8px,1.6vw,16px) 0 0;text-shadow:0 8px 46px rgba(0,0,0,.92)}
+.hero h1 span{display:inline-block;opacity:0;transform:translateY(38px) rotateX(-55deg);transform-origin:50% 100%}
+html:not(.js) .hero h1 span{opacity:1;transform:none}
+.hero h1.go span{animation:drop .72s var(--ease) forwards}
+@keyframes drop{to{opacity:1;transform:none}}
+.kick{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.44em;text-transform:uppercase;color:var(--ember-lit);margin-top:18px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border:1px solid var(--iron);
+  background:linear-gradient(160deg,rgba(27,32,39,.88),rgba(13,15,18,.88));backdrop-filter:blur(6px);
   font:700 11.5px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);
   clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);
-  transition:transform .16s,border-color .16s,background .16s;
-}
-.btn:hover{transform:translateY(-2px);border-color:var(--steel)}
+  transition:transform .2s var(--ease),border-color .2s,background .2s}
+.btn:hover{transform:translateY(-3px);border-color:var(--steel)}
 .btn.hot{background:linear-gradient(135deg,var(--blood),#7c1418);border-color:rgba(230,74,60,.5);color:#fff}
 .btn.hot:hover{background:linear-gradient(135deg,var(--blood-lit),var(--blood))}
 .btn.gold{background:linear-gradient(135deg,var(--ember),#8d5410);border-color:rgba(255,182,72,.45);color:#140d05}
+.btn .rip{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(0);background:rgba(255,255,255,.28);
+  pointer-events:none;animation:rip .6s ease-out forwards}
+@keyframes rip{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
 
-/* CB ticker */
-.ticker{position:relative;z-index:2;border-block:1px solid var(--rule);background:rgba(13,15,18,.92);overflow:hidden}
+/* ---------- ticker ---------- */
+.ticker{border-block:1px solid var(--rule);background:rgba(13,15,18,.94);overflow:hidden}
 .ticker div{display:flex;gap:40px;width:max-content;padding:11px 0;animation:roll 34s linear infinite}
 .ticker span{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:var(--ash);white-space:nowrap}
 .ticker b{color:var(--ember-lit);font-weight:400}
 @keyframes roll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
-@media(prefers-reduced-motion:reduce){.ticker div{animation:none}}
 
 /* ---------- section shell ---------- */
-section{padding:clamp(54px,8vw,92px) 0;position:relative;scroll-margin-top:62px}
-.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(22px,3vw,34px)}
-.head h2{font-size:clamp(28px,5vw,50px)}
-.head .eye{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.34em;text-transform:uppercase;color:var(--ember);margin-bottom:10px}
+section{padding:clamp(56px,8vw,100px) 0;position:relative;scroll-margin-top:64px}
+.plate{position:absolute;inset:-12% 0;z-index:0;overflow:hidden;will-change:transform}
+.plate img{width:100%;height:100%;object-fit:cover;opacity:.38;filter:saturate(.7)}
+.plate::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--void),rgba(8,9,11,.74) 42%,var(--void))}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(22px,3vw,36px)}
+.head h2{font-size:clamp(28px,5.2vw,54px)}
+.eye{position:relative;display:inline-flex;align-items:center;gap:10px;font:400 11px/1 'Share Tech Mono',monospace;
+  letter-spacing:.34em;text-transform:uppercase;color:var(--ember);margin-bottom:12px}
+.eye::before{content:"";width:9px;height:9px;background:var(--ember)}
 .head p{margin:0;color:var(--ash);max-width:52ch;font-size:16px}
 
-/* ---------- tiles ---------- */
-.tiles{display:grid;gap:clamp(12px,1.6vw,18px)}
+/* ---------- 3D tile system ---------- */
+.tiles{display:grid;gap:clamp(12px,1.6vw,18px);perspective:1500px}
 .duo{grid-template-columns:repeat(2,1fr)}
 .trio{grid-template-columns:repeat(3,1fr)}
 @media(max-width:940px){.duo,.trio{grid-template-columns:1fr}}
-.tile{
-  position:relative;display:block;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);
-  isolation:isolate;transition:border-color .2s;
-}
-.tile:hover{border-color:var(--steel)}
-.tile .shot{position:absolute;inset:0;z-index:0}
-.tile .shot img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.3,1);filter:saturate(.8) contrast(1.05)}
-.tile:hover .shot img{transform:scale(1.07)}
-.tile .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,9,11,.38) 0%,rgba(8,9,11,.56) 42%,rgba(8,9,11,.94) 100%)}
-.tile.deep .shot::after{background:linear-gradient(180deg,rgba(8,9,11,.72),rgba(8,9,11,.88))}
-.tile .body{position:relative;z-index:1;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;justify-content:flex-end;min-height:100%}
+.tile{position:relative;display:block;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);
+  isolation:isolate;transform-style:preserve-3d;
+  transition:transform .4s var(--ease),border-color .3s,box-shadow .4s var(--ease);will-change:transform}
+.tile:hover{border-color:var(--steel);box-shadow:0 34px 70px -30px rgba(0,0,0,.95),0 0 0 1px rgba(224,145,43,.18)}
+.tile .shot{position:absolute;inset:0;z-index:0;transform:translateZ(-30px) scale(1.06)}
+.tile .shot img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease);filter:saturate(.82) contrast(1.06)}
+.tile:hover .shot img{transform:scale(1.08)}
+.tile .shot::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(8,9,11,.4) 0%,rgba(8,9,11,.56) 42%,rgba(8,9,11,.95) 100%)}
+.tile.deep .shot::after{background:linear-gradient(110deg,rgba(8,9,11,.92) 0%,rgba(8,9,11,.74) 46%,rgba(8,9,11,.5) 100%)}
+.tile .body{position:relative;z-index:1;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:100%;transform:translateZ(26px)}
 .tile.big .body{min-height:clamp(420px,52vw,540px)}
 .tile.mid .body{min-height:clamp(300px,34vw,360px)}
 .tile.sm .body{min-height:250px}
-.tile h3{font-size:clamp(22px,3vw,36px);text-shadow:0 3px 20px rgba(0,0,0,.85)}
+.tile h3{font-size:clamp(22px,3vw,36px);text-shadow:0 3px 22px rgba(0,0,0,.9)}
 .tile .sub{font:400 10.5px/1 'Share Tech Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:var(--ash);margin-bottom:10px}
-.tile p{margin:10px 0 0;color:var(--parch);font-size:15.5px;max-width:52ch;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-.tile .flag{position:absolute;top:0;left:0;z-index:2;display:flex}
-.flag b{font:700 10px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;padding:8px 12px;color:#fff;background:var(--blood)}
+.tile p{margin:10px 0 0;color:var(--parch);font-size:15.5px;max-width:52ch;text-shadow:0 2px 14px rgba(0,0,0,.85)}
+.tile .flag{position:absolute;top:0;left:0;z-index:2;display:flex;transform:translateZ(40px)}
+.flag b{font:700 10px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;padding:9px 12px;color:#fff;background:var(--blood)}
 .flag b.gold{background:var(--ember);color:#140d05}
-.flag b.cool{background:rgba(13,15,18,.85);color:var(--ash);border-right:1px solid var(--rule)}
+.flag b.cool{background:rgba(13,15,18,.88);color:var(--ash);border-right:1px solid var(--rule)}
 .flag b.green{background:var(--plague);color:#0d1004}
-
-/* stat strip */
-.stats{display:flex;flex-wrap:wrap;gap:clamp(14px,2.4vw,30px);margin-top:18px;padding-top:15px;border-top:1px solid rgba(236,229,213,.16)}
+.stats{display:flex;flex-wrap:wrap;gap:clamp(14px,2.4vw,30px);margin-top:18px;padding-top:15px;border-top:1px solid rgba(236,229,213,.18)}
 .stats div b{display:block;font:900 19px/1.1 Cinzel,serif;color:var(--bone)}
 .stats div i{font-style:normal;font:400 9.5px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
 
-/* lords */
-.lords{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px;align-items:start}
+/* ---------- lords ---------- */
+.lords{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px;align-items:start;perspective:1200px}
 @media(max-width:820px){.lords{grid-template-columns:repeat(2,1fr)}}
-.lord{position:relative;overflow:hidden;border:1px solid var(--iron)}
-.lord img{width:100%;height:auto;display:block;transition:transform .6s}
-.lord:hover img{transform:scale(1.06)}
-.lord span{position:absolute;left:0;bottom:0;right:0;padding:9px 10px;background:linear-gradient(transparent,rgba(8,9,11,.94));font:400 10px/1.2 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--bone)}
-
-/* countdown */
-.cd{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.cd div{min-width:74px;padding:10px 12px;background:rgba(8,9,11,.72);border:1px solid var(--iron);border-top:2px solid var(--ember);backdrop-filter:blur(4px)}
-.cd b{display:block;font:900 26px/1 Cinzel,serif;color:var(--bone);font-variant-numeric:tabular-nums}
+.lord{position:relative;overflow:hidden;border:1px solid var(--iron);transition:transform .4s var(--ease),border-color .3s}
+.lord:hover{transform:translateY(-6px) scale(1.02);border-color:var(--ember)}
+.lord img{width:100%;height:auto;display:block;transition:transform .7s var(--ease)}
+.lord span{position:absolute;left:0;bottom:0;right:0;padding:9px 10px;background:linear-gradient(transparent,rgba(8,9,11,.95));
+  font:400 10px/1.2 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--bone)}
+.cd{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.cd div{position:relative;min-width:76px;padding:11px 13px;background:rgba(8,9,11,.74);border:1px solid var(--iron);
+  border-top:2px solid var(--ember);backdrop-filter:blur(4px)}
+.cd b{display:block;font:900 27px/1 Cinzel,serif;color:var(--bone);font-variant-numeric:tabular-nums}
 .cd i{font-style:normal;font:400 9px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);display:block;margin-top:6px}
 
-/* ---------- slop lab ---------- */
-.lab{border:1px solid var(--iron);background:linear-gradient(170deg,var(--slab),var(--pitch));overflow:hidden}
+/* ---------- lab ---------- */
+.lab{border:1px solid var(--iron);background:linear-gradient(170deg,var(--slab),var(--pitch));overflow:hidden;position:relative}
 .lab-art img{width:100%;height:auto;display:block;border-bottom:1px solid var(--iron)}
-.lab-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:0}
+.lab-grid{display:grid;grid-template-columns:1.25fr .75fr}
 @media(max-width:900px){.lab-grid{grid-template-columns:1fr}}
 .lab-cell{padding:clamp(18px,2.6vw,26px)}
 .lab-cell+.lab-cell{border-left:1px solid var(--iron)}
@@ -181,82 +236,125 @@ section{padding:clamp(54px,8vw,92px) 0;position:relative;scroll-margin-top:62px}
 .player .meta b{display:block;font:900 15px/1.2 Cinzel,serif;color:var(--bone)}
 .player .meta i{font-style:normal;font:400 9.5px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ember)}
 
-
-/* ---------- hall ---------- */
-.hall{column-count:3;column-gap:clamp(12px,1.6vw,18px)}
-@media(max-width:900px){.hall{column-count:2}}
-@media(max-width:560px){.hall{column-count:1}}
-.frame{position:relative;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);
-  break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 clamp(12px,1.6vw,18px);display:block}
-.frame img{width:100%;height:auto;transition:transform .8s cubic-bezier(.2,.7,.3,1);filter:saturate(.95)}
-.frame:hover img{transform:scale(1.06)}
-.frame figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px;background:linear-gradient(transparent,rgba(8,9,11,.94));
-  font:400 10px/1.5 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--parch)}
-.frame figcaption b{display:block;font-family:Cinzel,serif;font-size:15px;font-weight:900;letter-spacing:.04em;color:var(--bone);text-transform:none;margin-bottom:3px}
-
 /* ---------- dynasty ---------- */
-.dyn-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(12px,1.6vw,18px);align-items:stretch}
+.dyn-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(12px,1.6vw,18px)}
 @media(max-width:900px){.dyn-wrap{grid-template-columns:1fr}}
 .vid{position:relative;border:1px solid var(--iron);background:#000;overflow:hidden}
 .vid video{width:100%;height:100%;display:block;object-fit:cover;aspect-ratio:16/9}
 .vid figcaption{position:absolute;left:0;bottom:0;right:0;padding:12px 14px;pointer-events:none;
-  background:linear-gradient(transparent,rgba(8,9,11,.92));font:400 10px/1.4 'Share Tech Mono',monospace;
+  background:linear-gradient(transparent,rgba(8,9,11,.94));font:400 10px/1.4 'Share Tech Mono',monospace;
   letter-spacing:.18em;text-transform:uppercase;color:var(--parch)}
-.matchup{border:1px solid var(--iron);background:linear-gradient(170deg,var(--slab),var(--pitch));padding:clamp(18px,2.6vw,26px);display:flex;flex-direction:column;gap:14px}
-.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;text-align:center;
-  border-block:1px solid var(--rule);padding:16px 0}
+.matchup{border:1px solid var(--iron);background:linear-gradient(170deg,var(--slab),var(--pitch));
+  padding:clamp(18px,2.6vw,26px);display:flex;flex-direction:column;gap:16px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;text-align:center;border-block:1px solid var(--rule);padding:18px 0}
 .vs b{display:block;font:900 clamp(15px,2vw,19px)/1.2 Cinzel,serif;color:var(--bone)}
 .vs i{font-style:normal;font:400 9.5px/1.4 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);display:block;margin-top:5px}
 .vs .rk{color:var(--ember-lit)}
 .vs span.x{font:900 13px/1 Cinzel,serif;color:var(--blood-lit);letter-spacing:.1em}
+.booth{border:1px solid rgba(224,145,43,.35);background:rgba(224,145,43,.07);padding:15px 17px}
+.booth p{margin:0 0 8px;color:var(--bone);font-size:15.5px;font-style:italic}
+.booth p:last-of-type{margin-bottom:10px}
+.booth span{font:400 9.5px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ember)}
 .ecu{border:1px solid var(--iron);overflow:hidden}
 .ecu img{width:100%;height:auto;display:block}
 
-/* ---------- streams ---------- */
-.chans{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chans a{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);border:1px solid var(--iron);padding:9px 13px;background:var(--pitch);transition:.16s}
-.chans a:hover{color:var(--bone);border-color:var(--ember);background:var(--slab)}
+/* ---------- hall: horizontal rail + lightbox ---------- */
+.rail-x{display:flex;align-items:flex-start;gap:clamp(12px,1.6vw,18px);overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:4px 0 20px;scrollbar-width:thin;scrollbar-color:var(--iron) transparent;perspective:1400px;cursor:grab}
+.rail-x::-webkit-scrollbar{height:6px}
+.rail-x::-webkit-scrollbar-thumb{background:var(--iron)}
+.frame{position:relative;flex:0 0 auto;width:auto;height:clamp(280px,44vh,430px);max-width:min(640px,80vw);
+  scroll-snap-align:start;overflow:hidden;border:1px solid var(--iron);background:var(--pitch);cursor:zoom-in;
+  transition:transform .4s var(--ease),border-color .3s,box-shadow .4s var(--ease);margin:0}
+.frame:hover{transform:translateY(-8px) scale(1.015);border-color:var(--ember);box-shadow:0 30px 60px -28px rgba(0,0,0,.95)}
+.frame img{height:100%;width:auto;max-width:none;object-fit:cover;transition:transform .8s var(--ease);filter:saturate(.95)}
+.frame:hover img{transform:scale(1.05)}
+.frame figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px;
+  background:linear-gradient(transparent,rgba(8,9,11,.95));
+  font:400 10px/1.5 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--parch)}
+.frame figcaption b{display:block;font-family:Cinzel,serif;font-size:15px;font-weight:900;letter-spacing:.04em;
+  color:var(--bone);text-transform:none;margin-bottom:3px}
+.frame .zoom{position:absolute;top:10px;right:10px;width:30px;height:30px;border:1px solid rgba(236,229,213,.4);
+  background:rgba(8,9,11,.6);backdrop-filter:blur(4px);display:grid;place-items:center;opacity:0;transition:opacity .3s}
+.frame:hover .zoom{opacity:1}
+.hint{font:400 10px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-top:2px}
 
-/* ---------- roster ---------- */
-.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:1px;background:var(--iron);border:1px solid var(--iron)}
-.roster div{background:rgba(13,15,18,.94);padding:13px 15px;transition:background .16s}
-.roster div:hover{background:var(--slab2)}
+.lbx{position:fixed;inset:0;z-index:200;display:none;place-items:center;background:rgba(6,7,9,.94);
+  backdrop-filter:blur(10px);padding:clamp(12px,3vw,40px)}
+.lbx.on{display:grid}
+.lbx figure{margin:0;max-width:min(1400px,96vw);max-height:92svh;display:flex;flex-direction:column;gap:12px;
+  animation:pop .35s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.lbx img{max-width:100%;max-height:78svh;width:auto;height:auto;margin:0 auto;border:1px solid var(--iron);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.lbx figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.lbx figcaption b{font:900 17px/1.2 Cinzel,serif;color:var(--bone)}
+.lbx figcaption i{font-style:normal;font:400 10px/1.4 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.lbx button{position:absolute;background:rgba(20,23,28,.9);border:1px solid var(--iron);color:var(--bone);
+  width:46px;height:46px;cursor:pointer;font:400 18px/1 'Share Tech Mono',monospace;transition:.2s}
+.lbx button:hover{border-color:var(--ember);color:var(--ember-lit);transform:scale(1.06)}
+.lbx .pv{left:clamp(8px,2vw,28px);top:50%;margin-top:-23px}
+.lbx .nx{right:clamp(8px,2vw,28px);top:50%;margin-top:-23px}
+.lbx .cl{right:clamp(8px,2vw,28px);top:clamp(8px,2vw,28px)}
+.lbx .ct{position:absolute;left:50%;bottom:clamp(8px,2vw,24px);transform:translateX(-50%);
+  font:400 10px/1 'Share Tech Mono',monospace;letter-spacing:.24em;color:var(--steel)}
+
+/* ---------- streams / merch / roster ---------- */
+.chans{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chans a{font:400 11px/1 'Share Tech Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);
+  border:1px solid var(--iron);padding:10px 14px;background:var(--pitch);transition:.2s var(--ease)}
+.chans a:hover{color:var(--bone);border-color:var(--ember);background:var(--slab);transform:translateY(-2px)}
+.merch{position:relative;overflow:hidden;border:1px solid var(--iron);text-align:center;padding:clamp(34px,6vw,68px) var(--pad)}
+.merch .mp{position:absolute;inset:0;z-index:0}
+.merch .mp img{width:100%;height:100%;object-fit:cover;opacity:.34}
+.merch .mp::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 50% 50%,rgba(8,9,11,.55),rgba(8,9,11,.94))}
+.merch>*{position:relative;z-index:1}
+.goods{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:22px}
+.goods span{font:400 10px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);
+  border:1px dashed var(--iron);padding:10px 14px;transition:.2s}
+.goods span:hover{color:var(--ember-lit);border-color:rgba(224,145,43,.5)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:1px;background:var(--iron);border:1px solid var(--iron)}
+.roster div{background:rgba(13,15,18,.94);padding:14px 16px;transition:background .2s,transform .25s var(--ease)}
+.roster div:hover{background:var(--slab2);transform:translateY(-2px)}
 .roster b{display:block;font:600 14px/1.3 Cinzel,serif;color:var(--bone)}
+.roster i{font-style:normal;font:400 10px/1.4 'Share Tech Mono',monospace;letter-spacing:.1em;color:var(--ash);text-transform:uppercase}
 .trucker{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 8px;
   font:400 8.5px/1 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ember-lit);border:1px solid rgba(224,145,43,.42);background:rgba(224,145,43,.09)}
-.trucker svg{flex:0 0 auto}
-.roster i{font-style:normal;font:400 10px/1.4 'Share Tech Mono',monospace;letter-spacing:.1em;color:var(--ash);text-transform:uppercase}
-.bgart{position:relative;overflow:hidden}
-.bgart>.plate{position:absolute;inset:0;z-index:0}
-.bgart>.plate img{width:100%;height:100%;object-fit:cover;opacity:.3;filter:saturate(.6)}
-.bgart>.plate::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--void),rgba(8,9,11,.72) 40%,var(--void))}
-.bgart>.wrap{position:relative;z-index:1}
-
-/* ---------- merch ---------- */
-.merch{position:relative;overflow:hidden;border:1px solid var(--iron);text-align:center;padding:clamp(34px,6vw,64px) var(--pad)}
-.merch .plate{position:absolute;inset:0;z-index:0}
-.merch .plate img{width:100%;height:100%;object-fit:cover;opacity:.34}
-.merch .plate::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 50% 50%,rgba(8,9,11,.55),rgba(8,9,11,.93))}
-.merch>*{position:relative;z-index:1}
-.goods{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
-.goods span{font:400 10px/1 'Share Tech Mono',monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);border:1px dashed var(--iron);padding:10px 13px}
-
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--rule);padding:46px 0 60px;text-align:center}
+footer{border-top:1px solid var(--rule);padding:48px 0 62px;text-align:center}
 footer img{width:84px;height:84px;object-fit:contain;margin:0 auto 18px;opacity:.9}
 footer p{margin:5px 0;color:var(--ash);font-size:13.5px}
 footer .mono{font-size:10px;color:var(--steel)}
 footer a{color:var(--ash);border-bottom:1px solid var(--rule)}
 
-/* reveal, gated on html.js */
-html.js .rv{opacity:0;transform:translate3d(0,18px,0)}
-html.js .rv.in{opacity:1;transform:none;transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1)}
-@media(prefers-reduced-motion:reduce){html.js .rv{opacity:1;transform:none;transition:none}}
-section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
+/* ---------- reveal ---------- */
+html.js .rv{opacity:0;transform:translate3d(0,26px,0)}
+html.js .rv.in{opacity:1;transform:none;transition:opacity .6s ease,transform .7s var(--ease)}
+@media(prefers-reduced-motion:reduce){
+  html.js .rv{opacity:1;transform:none;transition:none}
+  .ticker div,.crest-big{animation:none}
+  .hero h1 span{opacity:1;transform:none;animation:none}
+}
+section:nth-of-type(n+5){content-visibility:auto;contain-intrinsic-size:1000px}
 </style>
 </head>
 <body>
+
+<div class="rig" aria-hidden="true">
+  <div class="glow"></div><div class="cols"></div><div class="rows"></div><div class="grain"></div>
+</div>
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<nav class="rail" id="rail" aria-label="Section index">
+  <a href="#wardogs"><i>Wardogs</i><s></s></a>
+  <a href="#endtimes"><i>End Times</i><s></s></a>
+  <a href="#board"><i>The Board</i><s></s></a>
+  <a href="#dynasty"><i>Dynasty</i><s></s></a>
+  <a href="#lab"><i>Slop Lab</i><s></s></a>
+  <a href="#hall"><i>The Hall</i><s></s></a>
+  <a href="#streams"><i>Streams</i><s></s></a>
+  <a href="#roster"><i>Roster</i><s></s></a>
+</nav>
 
 <header class="nav">
   <div class="nav-in">
@@ -270,8 +368,8 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
       <a href="#board">The Board</a>
       <a href="#dynasty">Dynasty</a>
       <a href="#lab">Slop Lab</a>
-      <a href="#streams">Streams</a>
       <a href="#hall">The Hall</a>
+      <a href="#streams">Streams</a>
       <a href="#roster">Roster</a>
     </nav>
     <a class="live-btn" href="watch.html">Watch</a>
@@ -282,12 +380,12 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 
 <!-- ================= HERO ================= -->
 <section class="hero" style="padding-top:0">
-  <div class="hero-bg"><img src="img/hero-wardogs.webp" alt="" width="1280" height="720" fetchpriority="high"></div>
-  <div class="hero-in">
-    <img class="crest-big" src="img/hige-logo.webp" alt="HIGE.GG" width="760" height="895" fetchpriority="high">
-    <h1>HIGE</h1>
+  <div class="hero-l" data-par="0.22"><img src="img/hero-wardogs.webp" alt="" width="1280" height="720" fetchpriority="high"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-in" id="heroIn">
+    <img class="crest-big" id="crest" src="img/hige-logo.webp" alt="HIGE.GG" width="760" height="895" fetchpriority="high">
+    <h1 id="wordmark">HIGE</h1>
     <p class="kick">Est. 1995 · Thirty Years Deep · Still Rolling</p>
-    <p>Twelve of us, every night, across every map that will have us. Right now that means <b style="color:var(--ember-lit);font-weight:600">WARDOGS</b> on NA Central, the End Times a week out, and a Norrath we already finished.</p>
     <div class="cta">
       <a class="btn hot" href="watch.html">Watch the Grid</a>
       <a class="btn" href="#wardogs">The Convoy</a>
@@ -314,19 +412,13 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <!-- ================= HEADLINERS ================= -->
 <section id="wardogs">
   <div class="wrap">
-    <div class="head rv">
-      <div>
-        <p class="eye">Headliners</p>
-        <h2>Two Fronts</h2>
-      </div>
-      <p>One live right now, one landing in a week. Everything else on the board fits around these.</p>
-    </div>
+    <div class="head rv"><div><p class="eye">Headliners</p><h2>Two Fronts</h2></div></div>
 
     <div class="tiles duo">
-
-      <a class="tile big rv" href="#streams">
+      <a class="tile big rv tilt" href="#streams">
         <div class="shot"><img src="img/wardogs-3.webp" alt="WARDOGS" loading="lazy" decoding="async" width="880" height="495"></div>
         <div class="flag"><b>Live Now</b><b class="cool">NA Central</b><b class="cool">&lt;HIGE&gt;</b></div>
+        <span class="bk tl"></span><span class="bk br"></span>
         <div class="body">
           <p class="sub">The Surprise · Bulkhead · Team17</p>
           <h3>WARDOGS</h3>
@@ -340,9 +432,10 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
         </div>
       </a>
 
-      <a class="tile big rv" href="#endtimes">
+      <a class="tile big rv tilt" href="#endtimes">
         <div class="shot"><img src="img/tww3-bg.webp" alt="Total War WARHAMMER III" loading="lazy" decoding="async" width="1280" height="720"></div>
         <div class="flag"><b class="gold">24 Sept</b><b class="cool">Countdown</b></div>
+        <span class="bk tr"></span><span class="bk bl"></span>
         <div class="body">
           <p class="sub">Total War: WARHAMMER III</p>
           <h3>Lords of the End Times</h3>
@@ -355,19 +448,19 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
           </div>
         </div>
       </a>
-
     </div>
   </div>
 </section>
 
-<!-- ================= END TIMES DETAIL ================= -->
+<!-- ================= END TIMES ================= -->
 <section id="endtimes" style="padding-top:0">
   <div class="wrap">
     <div class="tile deep rv">
-      <div class="shot"><img src="img/tww3-2.webp" alt="" loading="lazy" decoding="async" width="880" height="495"></div>
+      <div class="shot" data-par="0.10"><img src="img/nagash-bg.webp" alt="Nagash and the undead legions" loading="lazy" decoding="async" width="1400" height="788"></div>
+      <span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span>
       <div class="body" style="min-height:auto">
         <p class="sub">Four Lords · One Apocalypse</p>
-        <h3 style="font-size:clamp(20px,2.6vw,30px)">Who We're Taking</h3>
+        <h3 style="font-size:clamp(20px,2.6vw,32px)">Who We're Taking</h3>
         <div class="lords">
           <div class="lord"><img src="img/lord-nagash.webp" alt="Nagash" loading="lazy" decoding="async" width="460" height="215"><span>Nagash · Undead</span></div>
           <div class="lord"><img src="img/lord-thanquol.webp" alt="Grey Seer Thanquol" loading="lazy" decoding="async" width="460" height="215"><span>Thanquol · Skaven</span></div>
@@ -388,36 +481,21 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <!-- ================= THE BOARD ================= -->
 <section id="board">
   <div class="wrap">
-    <div class="head rv">
-      <div>
-        <p class="eye">In Rotation</p>
-        <h2>The Board</h2>
-      </div>
-    </div>
+    <div class="head rv"><div><p class="eye">In Rotation</p><h2>The Board</h2></div></div>
 
     <div class="tiles trio">
 
-      <a class="tile mid rv" href="https://store.steampowered.com/app/1295660/" target="_blank" rel="noopener">
-        <div class="shot"><img src="img/civ7.webp" alt="Civilization VII" loading="lazy" decoding="async" width="880" height="495"></div>
-        <div class="flag"><b class="cool">On Deck</b></div>
+      <a class="tile mid rv tilt" href="#wardogs">
+        <div class="shot"><img src="img/wardogs-4.webp" alt="WARDOGS" loading="lazy" decoding="async" width="880" height="495"></div>
+        <div class="flag"><b>Live Now</b></div>
         <div class="body">
-          <p class="sub">Kody &amp; Soot</p>
-          <h3>Civilization VII</h3>
-          <p>Patch 1.5 landed with new leaders, new maps and a true-start Earth. Queued up for the next quiet week.</p>
+          <p class="sub">Everyone but Kody and Harold</p>
+          <h3>WARDOGS</h3>
+          <p>Cargo runs, base building, and holding the zone on NA Central. The whole clan, most nights.</p>
         </div>
       </a>
 
-      <a class="tile mid rv" href="https://twitch.tv/KodyCQ" target="_blank" rel="noopener">
-        <div class="shot"><img src="img/herosiege-kody.webp" alt="Hero Siege run from Kody" loading="lazy" decoding="async" width="1062" height="873"></div>
-        <div class="flag"><b class="green">Climbed</b></div>
-        <div class="body">
-          <p class="sub">Kody · Solo Ladder</p>
-          <h3>Hero Siege</h3>
-          <p>Kody climbed the ladder like a champ, on stream, the whole way up. Twenty thousand gold into the gamba machine and no regrets.</p>
-        </div>
-      </a>
-
-      <a class="tile mid rv" href="#lab">
+      <a class="tile mid rv tilt" href="#lab">
         <div class="shot"><img src="img/eql-jade.webp" alt="EverQuest Legends" loading="lazy" decoding="async" width="1500" height="804"></div>
         <div class="flag"><b class="green">Cleared</b><b class="cool">Qeynos</b></div>
         <div class="body">
@@ -427,7 +505,27 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
         </div>
       </a>
 
-      <a class="tile mid rv" href="https://store.steampowered.com/app/1203620/" target="_blank" rel="noopener">
+      <a class="tile mid rv tilt" href="https://store.steampowered.com/app/1295660/" target="_blank" rel="noopener">
+        <div class="shot"><img src="img/civ7.webp" alt="Civilization VII" loading="lazy" decoding="async" width="880" height="495"></div>
+        <div class="flag"><b class="cool">On Deck</b></div>
+        <div class="body">
+          <p class="sub">Kody &amp; Soot</p>
+          <h3>Civilization VII</h3>
+          <p>Patch 1.5 landed with new leaders, new maps and a true-start Earth. Queued up for the next quiet week.</p>
+        </div>
+      </a>
+
+      <a class="tile mid rv tilt" href="https://twitch.tv/KodyCQ" target="_blank" rel="noopener">
+        <div class="shot"><img src="img/herosiege-kody.webp" alt="Hero Siege run from Kody" loading="lazy" decoding="async" width="1062" height="873"></div>
+        <div class="flag"><b class="green">Climbed</b></div>
+        <div class="body">
+          <p class="sub">Kody · Solo Ladder</p>
+          <h3>Hero Siege</h3>
+          <p>Kody climbed the ladder like a champ, on stream, the whole way up. Twenty thousand gold into the gamba machine and no regrets.</p>
+        </div>
+      </a>
+
+      <a class="tile mid rv tilt" href="https://store.steampowered.com/app/1203620/" target="_blank" rel="noopener">
         <div class="shot"><img src="img/enshrouded-2.webp" alt="Enshrouded" loading="lazy" decoding="async" width="880" height="495"></div>
         <div class="flag"><b class="cool">October</b></div>
         <div class="body">
@@ -437,7 +535,7 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
         </div>
       </a>
 
-      <div class="tile mid rv">
+      <div class="tile mid rv tilt">
         <div class="shot"><img src="img/valheim-1.webp" alt="Valheim Deep North" loading="lazy" decoding="async" width="1000" height="563"></div>
         <div class="flag"><b class="cool">Passing</b></div>
         <div class="body">
@@ -455,11 +553,8 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <section id="dynasty" style="padding-top:0">
   <div class="wrap">
     <div class="head rv">
-      <div>
-        <p class="eye">NCAA Dynasty · Season 2</p>
-        <h2>Tigers vs Pirates</h2>
-      </div>
-      <p>Soot and Pugh, two programs, one dynasty, and the matchup we have been building toward since week one. Both inside the top 6.</p>
+      <div><p class="eye">NCAA Dynasty · 2028 Season</p><h2>Tigers vs Pirates</h2></div>
+      <p>Soot and Pugh, two programs, one dynasty. All of 2027 the schedule kept them apart. 2028 finally put them across from each other, both inside the top 6.</p>
     </div>
 
     <div class="dyn-wrap rv">
@@ -471,13 +566,17 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
       </figure>
 
       <div class="matchup">
-        <p class="sub" style="font:400 10.5px/1 'Share Tech Mono',monospace;letter-spacing:.24em;text-transform:uppercase;color:var(--ash);margin:0">The Matchup</p>
+        <p class="eye" style="margin:0">The Matchup</p>
         <div class="vs">
           <span><b>Memphis Tigers</b><i>Soot</i><i class="rk">Top 6</i></span>
           <span class="x">VS</span>
           <span><b>ECU Pirates</b><i>Pugh</i><i class="rk">Top 6</i></span>
         </div>
-        <p style="margin:0;color:var(--ash);font-size:15.5px">Recruiting got personal a long time ago. Now the schedule has finally put them across from each other, with both teams ranked and neither willing to hear about it afterward.</p>
+        <div class="booth">
+          <p>"The team that scores more points is gonna have a real good chance to win this football game."</p>
+          <p>"You can't lose if they don't score. That's just math, and math is football."</p>
+          <span>Booth wisdom · volume up</span>
+        </div>
         <figure class="ecu" style="margin:auto 0 0">
           <img src="img/ncaa-ecu.webp" alt="ECU player of the game: AJ Hill, 120 pass yards, 100% completion, 4 touchdowns" loading="lazy" decoding="async" width="1400" height="788">
         </figure>
@@ -490,14 +589,12 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <section id="lab">
   <div class="wrap">
     <div class="head rv">
-      <div>
-        <p class="eye">Norrath Post-Game</p>
-        <h2>The Parse Slop Lab</h2>
-      </div>
+      <div><p class="eye">Norrath Post-Game</p><h2>The Parse Slop Lab</h2></div>
       <p>We beat the game, so now we feed EQLogParses to the machines and see what crawls out. Comics, videos, songs, all of it dumber and better than it needs to be.</p>
     </div>
 
     <div class="lab rv">
+      <span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span>
       <div class="lab-art"><img src="img/eql-comic.webp" alt="HIGE raid comic generated from EQ log parses" loading="lazy" decoding="async" width="1700" height="949"></div>
       <div class="lab-grid">
         <div class="lab-cell">
@@ -508,7 +605,6 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
         </div>
         <div class="lab-cell">
           <h3 style="font-size:20px">Output: Hige Wave</h3>
-          <p style="color:var(--ash);margin:8px 0 0;font-size:15px">Same logs, run through a different machine. Original tracks, clan canon.</p>
           <div class="player">
             <span class="meta"><b>Fifty-Eight Fights in Hate</b><i>Hige Wave</i></span>
             <audio controls preload="none" src="audio/fifty-eight-fights-in-hate.mp3"></audio>
@@ -525,22 +621,21 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <section id="hall" style="padding-top:0">
   <div class="wrap">
     <div class="head rv">
-      <div>
-        <p class="eye">Clan Canon</p>
-        <h2>The Hall</h2>
-      </div>
-      <p>Thirty years of characters, kills and running jokes, rendered by whatever machine was handy that week.</p>
+      <div><p class="eye">The Gallery</p><h2>The Hall</h2></div>
+      <p class="hint">Click any plate to open it full size · drag the rail to scroll</p>
     </div>
-    <div class="hall rv">
-      <figure class="frame"><img src="img/eql-harold.webp" alt="Harold Troutman the Ember" loading="lazy" decoding="async" width="1364" height="768"><figcaption><b>Harold Troutman, the Ember</b>Still in there, still unlocking classes</figcaption></figure>
-      <figure class="frame"><img src="img/art-frogknight.webp" alt="Armored frog knight" loading="lazy" decoding="async" width="900" height="740"><figcaption><b>The Frog Knight</b>Order of the Damp Halberd</figcaption></figure>
-      <figure class="frame"><img src="img/eql-tatimus.webp" alt="Tatimus the Coldeye" loading="lazy" decoding="async" width="1024" height="471"><figcaption><b>Tatimus the Coldeye</b>Data-magik, fizzle-krak</figcaption></figure>
-      <figure class="frame"><img src="img/eql-grimwolf.webp" alt="Grimwolf the Redfist" loading="lazy" decoding="async" width="1024" height="634"><figcaption><b>Grimwolf the Redfist</b>Sky-high pleasures and spiritual relief</figcaption></figure>
-      <figure class="frame"><img src="img/art-lizards.webp" alt="Two warriors before a wall of fire" loading="lazy" decoding="async" width="1200" height="1019"><figcaption><b>Plane of Fear, Again</b>Standing where we used to wipe</figcaption></figure>
-      <figure class="frame"><img src="img/eql-warder.webp" alt="Harold's warder, a skunk" loading="lazy" decoding="async" width="1024" height="858"><figcaption><b>Harold's Warder</b>Undefeated, unwashed</figcaption></figure>
-      <figure class="frame"><img src="img/eql-harold2.webp" alt="Harold clearing a room of skeletons" loading="lazy" decoding="async" width="1364" height="768"><figcaption><b>The Warrior's Path</b>Skree, crash, krak</figcaption></figure>
-      <figure class="frame"><img src="img/art-quijibo.webp" alt="Quijibo fight poster" loading="lazy" decoding="async" width="700" height="1687"><figcaption><b>Unleash the Eldritch Fury</b>Quijibo, fastest fists in the guild</figcaption></figure>
-      <figure class="frame"><img src="img/eql-tatimus2.webp" alt="Tatimus overseeing kobold workstations" loading="lazy" decoding="async" width="1024" height="414"><figcaption><b>The Kobold Workstations</b>Tatimus, middle management</figcaption></figure>
+  </div>
+  <div class="wrap">
+    <div class="rail-x rv" id="hallRail">
+      <figure class="frame" data-full="img/eql-harold.webp"><img src="img/eql-harold.webp" alt="Harold Troutman the Ember" loading="lazy" decoding="async" width="1364" height="768"><span class="zoom mono">+</span><figcaption><b>Harold Troutman, the Ember</b>Still in there, still unlocking classes</figcaption></figure>
+      <figure class="frame" data-full="img/art-frogknight.webp"><img src="img/art-frogknight.webp" alt="Armored frog knight" loading="lazy" decoding="async" width="900" height="740"><span class="zoom mono">+</span><figcaption><b>The Frog Knight</b>Order of the Damp Halberd</figcaption></figure>
+      <figure class="frame" data-full="img/eql-tatimus.webp"><img src="img/eql-tatimus.webp" alt="Tatimus the Coldeye" loading="lazy" decoding="async" width="1024" height="471"><span class="zoom mono">+</span><figcaption><b>Tatimus the Coldeye</b>Data-magik, fizzle-krak</figcaption></figure>
+      <figure class="frame" data-full="img/eql-grimwolf.webp"><img src="img/eql-grimwolf.webp" alt="Grimwolf the Redfist" loading="lazy" decoding="async" width="1024" height="634"><span class="zoom mono">+</span><figcaption><b>Grimwolf the Redfist</b>Sky-high pleasures and spiritual relief</figcaption></figure>
+      <figure class="frame" data-full="img/art-lizards.webp"><img src="img/art-lizards.webp" alt="Two warriors before a wall of fire" loading="lazy" decoding="async" width="1200" height="1019"><span class="zoom mono">+</span><figcaption><b>Plane of Fear, Again</b>Standing where we used to wipe</figcaption></figure>
+      <figure class="frame" data-full="img/eql-warder.webp"><img src="img/eql-warder.webp" alt="Harold's warder, a skunk" loading="lazy" decoding="async" width="1024" height="858"><span class="zoom mono">+</span><figcaption><b>Harold's Warder</b>Undefeated, unwashed</figcaption></figure>
+      <figure class="frame" data-full="img/eql-harold2.webp"><img src="img/eql-harold2.webp" alt="Harold clearing a room of skeletons" loading="lazy" decoding="async" width="1364" height="768"><span class="zoom mono">+</span><figcaption><b>The Warrior's Path</b>Skree, crash, krak</figcaption></figure>
+      <figure class="frame" data-full="img/art-quijibo.webp"><img src="img/art-quijibo.webp" alt="Quijibo fight poster" loading="lazy" decoding="async" width="700" height="1687"><span class="zoom mono">+</span><figcaption><b>Unleash the Eldritch Fury</b>Quijibo, fastest fists in the guild</figcaption></figure>
+      <figure class="frame" data-full="img/eql-tatimus2.webp"><img src="img/eql-tatimus2.webp" alt="Tatimus overseeing kobold workstations" loading="lazy" decoding="async" width="1024" height="414"><span class="zoom mono">+</span><figcaption><b>The Kobold Workstations</b>Tatimus, middle management</figcaption></figure>
     </div>
   </div>
 </section>
@@ -548,15 +643,10 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <!-- ================= STREAMS ================= -->
 <section id="streams">
   <div class="wrap">
-    <div class="head rv">
-      <div>
-        <p class="eye">The Broadcast</p>
-        <h2>Live From the Crew</h2>
-      </div>
-    </div>
+    <div class="head rv"><div><p class="eye">The Broadcast</p><h2>Live From the Crew</h2></div></div>
 
     <div class="tiles duo">
-      <a class="tile sm rv" href="https://twitch.tv/HIGEsoot" target="_blank" rel="noopener">
+      <a class="tile sm rv tilt" href="https://twitch.tv/HIGEsoot" target="_blank" rel="noopener">
         <div class="shot"><img src="img/wardogs-4.webp" alt="" loading="lazy" decoding="async" width="880" height="495"></div>
         <div class="flag"><b>Active</b></div>
         <div class="body">
@@ -565,7 +655,7 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
           <p>Chaos Architect. Wardogs convoys, Warhammer campaigns, and Memphis on Saturdays.</p>
         </div>
       </a>
-      <a class="tile sm rv" href="https://twitch.tv/KodyCQ" target="_blank" rel="noopener">
+      <a class="tile sm rv tilt" href="https://twitch.tv/KodyCQ" target="_blank" rel="noopener">
         <div class="shot"><img src="img/herosiege.webp" alt="" loading="lazy" decoding="async" width="880" height="495"></div>
         <div class="flag"><b>Active</b></div>
         <div class="body">
@@ -591,10 +681,11 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 <section id="merch" style="padding-top:0">
   <div class="wrap">
     <div class="merch rv">
-      <div class="plate"><img src="img/art-tavern.webp" alt="" loading="lazy" decoding="async" width="1600" height="464"></div>
-      <p class="eye" style="color:var(--ember)">The Quartermaster</p>
-      <h2 style="font-size:clamp(26px,4.5vw,44px)">Merch Store</h2>
-      <p style="color:var(--parch);max-width:52ch;margin:14px auto 0">Coming soon. The crest and thirty years of inside jokes, printed on things you can actually own. Tell us what belongs on a shirt before we decide for you.</p>
+      <div class="mp" data-par="0.08"><img src="img/art-tavern.webp" alt="" loading="lazy" decoding="async" width="1600" height="464"></div>
+      <span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span>
+      <p class="eye" style="justify-content:center">The Quartermaster</p>
+      <h2 style="font-size:clamp(26px,4.5vw,46px)">Merch Store</h2>
+      <p style="color:var(--parch);max-width:52ch;margin:16px auto 0">Coming soon. The crest and thirty years of inside jokes, printed on things you can actually own. Tell us what belongs on a shirt before we decide for you.</p>
       <div class="goods">
         <span>Crest Hoodies</span><span>Tees</span><span>Mugs</span><span>Die-Cut Vinyl</span><span>Patches</span><span>Convoy Plates</span>
       </div>
@@ -604,37 +695,15 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
 </section>
 
 <!-- ================= ROSTER ================= -->
-<section id="roster" class="bgart">
-  <div class="plate"><img src="img/art-party.webp" alt="" loading="lazy" decoding="async" width="1600" height="636"></div>
+<section id="roster">
+  <div class="plate" data-par="0.12"><img src="img/art-party.webp" alt="" loading="lazy" decoding="async" width="1600" height="636"></div>
   <div class="wrap">
     <div class="head rv">
-      <div>
-        <p class="eye">The Guild</p>
-        <h2>Current Roster</h2>
-      </div>
+      <div><p class="eye">The Guild</p><h2>Current Roster</h2></div>
       <p>&lt;Hige&gt; on Qeynos, &lt;HIGE&gt; on NA Central. Same names, different maps, thirty years running. Hats mark the crew running Wardogs early access.</p>
     </div>
-    <div class="roster rv">
-      <div><b>Soot</b><i>Puck Periwinkle · 50</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Jibbish</b><i>Jibbish · 50</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Tat</b><i>Tatimus · 50</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Grim</b><i>Kajunc · 50</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Ursula</b><i>Jae · WAR/MNK/ROG</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Higgins</b><i>jackie jackson · 48</i><span class="trucker"><svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true"><path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>Wardog Trucker</span></div>
-      <div><b>Harold</b><i>Harold Troutman · 50</i></div>
-      <div><b>Zalimus</b><i>Zalimus · 50</i></div>
-      <div><b>Quijibo</b><i>Cabernets · 50</i></div>
-      <div><b>Talz</b><i>#1 Dog Walker · 37</i></div>
-      <div><b>Lotek</b><i>EQ:L Roster</i></div>
-      <div><b>Kody</b><i>Flannannigan · 16</i></div>
-      <div><b>Capin Crunch</b><i>Capn · 5</i></div>
-      <div><b>Pugh</b><i>ECU Pirates</i></div>
-      <div><b>Pikki</b><i>Co-Lead</i></div>
-      <div><b>Guac</b><i>West Coast Slayer</i></div>
-      <div><b>Ding</b><i>Norrath</i></div>
-      <div><b>Lopt</b><i>Norrath</i></div>
-    </div>
-    <div class="cta" style="justify-content:flex-start;margin-top:24px">
+    <div class="roster rv" id="rosterGrid"></div>
+    <div class="cta" style="justify-content:flex-start;margin-top:26px">
       <a class="btn hot" href="watch.html">Watch the Grid</a>
       <a class="btn" href="#wardogs">Join the Convoy</a>
     </div>
@@ -652,40 +721,236 @@ section:nth-of-type(n+4){content-visibility:auto;contain-intrinsic-size:900px}
   </div>
 </footer>
 
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Artwork viewer">
+  <button class="cl" id="lbxClose" type="button" aria-label="Close">×</button>
+  <button class="pv" id="lbxPrev" type="button" aria-label="Previous">‹</button>
+  <button class="nx" id="lbxNext" type="button" aria-label="Next">›</button>
+  <figure>
+    <img id="lbxImg" src="" alt="">
+    <figcaption><b id="lbxTitle"></b><i id="lbxSub"></i></figcaption>
+  </figure>
+  <span class="ct" id="lbxCount"></span>
+</div>
+
 <script>
 (function(){
-  try{
-    document.documentElement.className += ' js';
+  var ROSTER = [
+    ['Soot','Puck Periwinkle · 50',1],['Jibbish','Jibbish · 50',1],['Tat','Tatimus · 50',1],
+    ['Grim','Kajunc · 50',1],['Ursula','Jae · WAR/MNK/ROG',1],['Higgins','jackie jackson · 48',1],
+    ['Harold','Harold Troutman · 50',0],['Zalimus','Zalimus · 50',0],['Quijibo','Cabernets · 50',0],
+    ['Talz','#1 Dog Walker · 37',0],['Lotek','EQ:L Roster',0],['Kody','Flannannigan · 16',0],
+    ['Capin Crunch','Capn · 5',0],['Pugh','ECU Pirates',0],['Pikki','Co-Lead',0],
+    ['Guac','West Coast Slayer',0],['Ding','Norrath',0],['Lopt','Norrath',0]
+  ];
+  var HAT = '<svg viewBox="0 0 24 16" width="13" height="9" aria-hidden="true">'+
+    '<path d="M4 10c0-4 3.4-7 8-7s8 3 8 7z" fill="none" stroke="currentColor" stroke-width="1.4"/>'+
+    '<path d="M2.5 10.5h19c0 1.5-1 2.3-2.4 2.3H4.9c-1.4 0-2.4-.8-2.4-2.3z" fill="none" stroke="currentColor" stroke-width="1.4"/>'+
+    '<path d="M8 4.6v5.4M12 3.3v6.7M16 4.6v5.4" stroke="currentColor" stroke-width=".9" opacity=".55"/></svg>';
 
-    var target = new Date('2026-09-24T00:00:00-04:00').getTime();
-    var c = {};
+  function build(){
+    var g = document.getElementById('rosterGrid');
+    if(!g) return;
+    g.innerHTML = ROSTER.map(function(r){
+      return '<div><b>'+r[0]+'</b><i>'+r[1]+'</i>'+
+        (r[2] ? '<span class="trucker">'+HAT+'Wardog Trucker</span>' : '')+'</div>';
+    }).join('');
+  }
+
+  try{
+    var root = document.documentElement;
+    root.className += ' js';
+    build();
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fine   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    /* ---- kinetic wordmark ---- */
+    var wm = document.getElementById('wordmark');
+    if(wm){
+      var txt = wm.textContent.trim();
+      wm.innerHTML = txt.split('').map(function(c,i){
+        return '<span style="animation-delay:'+(120 + i*85)+'ms">'+c+'</span>';
+      }).join('');
+      requestAnimationFrame(function(){ wm.classList.add('go'); });
+    }
+
+    /* ---- countdown ---- */
+    var target = new Date('2026-09-24T00:00:00-04:00').getTime(), c = {};
     ['d','h','m','s'].forEach(function(k){ c[k] = document.querySelector('[data-cd="'+k+'"]'); });
-    function p(n){ return (n<10?'0':'')+n; }
+    function pad(n){ return (n<10?'0':'')+n; }
     function tick(){
       var gap = target - Date.now();
       if(gap <= 0){ ['d','h','m','s'].forEach(function(k){ if(c[k]) c[k].textContent='00'; }); return; }
       var s = Math.floor(gap/1000);
       if(c.d) c.d.textContent = Math.floor(s/86400);
-      if(c.h) c.h.textContent = p(Math.floor(s/3600)%24);
-      if(c.m) c.m.textContent = p(Math.floor(s/60)%60);
-      if(c.s) c.s.textContent = p(s%60);
+      if(c.h) c.h.textContent = pad(Math.floor(s/3600)%24);
+      if(c.m) c.m.textContent = pad(Math.floor(s/60)%60);
+      if(c.s) c.s.textContent = pad(s%60);
     }
     tick(); setInterval(tick,1000);
 
-    var items = document.querySelectorAll('.rv');
+    /* ---- reveal ---- */
+    var rv = document.querySelectorAll('.rv');
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(es){
         es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
       },{rootMargin:'0px 0px -6% 0px',threshold:.04});
-      items.forEach(function(el){ io.observe(el); });
-    } else { items.forEach(function(el){ el.classList.add('in'); }); }
+      rv.forEach(function(el){ io.observe(el); });
+    } else { rv.forEach(function(el){ el.classList.add('in'); }); }
 
-    document.querySelectorAll('img').forEach(function(i){
-      i.addEventListener('error', function(){ i.style.visibility='hidden'; });
+    /* ---- scroll: progress + parallax layers ---- */
+    var prog = document.getElementById('prog');
+    var pars = [].slice.call(document.querySelectorAll('[data-par]'));
+    var ticking = false;
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY || 0;
+        var max = Math.max(1, document.body.scrollHeight - window.innerHeight);
+        if(prog) prog.style.transform = 'scaleX('+Math.min(1, y/max)+')';
+        if(!reduce){
+          for(var i=0;i<pars.length;i++){
+            var el = pars[i], r = el.getBoundingClientRect();
+            if(r.bottom < -200 || r.top > window.innerHeight + 200) continue;
+            var rate = parseFloat(el.getAttribute('data-par')) || 0.15;
+            var off = (r.top + r.height/2 - window.innerHeight/2) * -rate;
+            el.style.transform = 'translate3d(0,'+off.toFixed(1)+'px,0)';
+          }
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    onScroll();
+
+    /* ---- section rail ---- */
+    var railLinks = [].slice.call(document.querySelectorAll('.rail a'));
+    if(railLinks.length && 'IntersectionObserver' in window){
+      var secIo = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(!e.isIntersecting) return;
+          railLinks.forEach(function(a){
+            a.classList.toggle('on', a.getAttribute('href') === '#'+e.target.id);
+          });
+        });
+      },{rootMargin:'-45% 0px -50% 0px'});
+      railLinks.forEach(function(a){
+        var t = document.querySelector(a.getAttribute('href'));
+        if(t) secIo.observe(t);
+      });
+    }
+
+    /* ---- 3D tilt on cards ---- */
+    if(fine && !reduce){
+      [].slice.call(document.querySelectorAll('.tilt')).forEach(function(el){
+        el.addEventListener('pointermove', function(ev){
+          var r = el.getBoundingClientRect();
+          var px = (ev.clientX - r.left)/r.width - .5;
+          var py = (ev.clientY - r.top)/r.height - .5;
+          el.style.transform = 'perspective(1500px) rotateY('+(px*7).toFixed(2)+'deg) rotateX('+(-py*7).toFixed(2)+'deg) translateZ(14px)';
+        });
+        el.addEventListener('pointerleave', function(){ el.style.transform = ''; });
+      });
+
+      /* hero crest follows the pointer */
+      var hero = document.querySelector('.hero'), crest = document.getElementById('crest');
+      if(hero && crest){
+        hero.addEventListener('pointermove', function(ev){
+          var r = hero.getBoundingClientRect();
+          var px = (ev.clientX - r.left)/r.width - .5;
+          var py = (ev.clientY - r.top)/r.height - .5;
+          crest.style.transform = 'rotateY('+(px*13).toFixed(2)+'deg) rotateX('+(-py*9).toFixed(2)+'deg)';
+        });
+        hero.addEventListener('pointerleave', function(){ crest.style.transform = ''; });
+      }
+    }
+
+    /* ---- button ripple ---- */
+    [].slice.call(document.querySelectorAll('.btn, .live-btn')).forEach(function(b){
+      b.addEventListener('click', function(ev){
+        var r = b.getBoundingClientRect(), d = Math.max(r.width, r.height)*2.2;
+        var s = document.createElement('span');
+        s.className = 'rip';
+        s.style.width = s.style.height = d+'px';
+        s.style.left = (ev.clientX - r.left)+'px';
+        s.style.top  = (ev.clientY - r.top)+'px';
+        b.appendChild(s);
+        setTimeout(function(){ s.remove(); }, 620);
+      });
     });
+
+    /* ---- hall: drag to scroll + lightbox ---- */
+    var railx = document.getElementById('hallRail');
+    if(railx){
+      var down=false, sx=0, sl=0, moved=0;
+      railx.addEventListener('pointerdown', function(e){
+        down=true; moved=0; sx=e.clientX; sl=railx.scrollLeft; railx.style.cursor='grabbing';
+      });
+      railx.addEventListener('pointermove', function(e){
+        if(!down) return;
+        var dx = e.clientX - sx; moved = Math.max(moved, Math.abs(dx));
+        railx.scrollLeft = sl - dx;
+      });
+      ['pointerup','pointerleave','pointercancel'].forEach(function(ev){
+        railx.addEventListener(ev, function(){ down=false; railx.style.cursor=''; });
+      });
+    }
+
+    var frames = [].slice.call(document.querySelectorAll('.frame'));
+    var lbx = document.getElementById('lbx');
+    var lImg = document.getElementById('lbxImg'), lT = document.getElementById('lbxTitle'),
+        lS = document.getElementById('lbxSub'), lC = document.getElementById('lbxCount');
+    var idx = 0;
+
+    function show(i){
+      if(!frames.length) return;
+      idx = (i + frames.length) % frames.length;
+      var f = frames[idx];
+      var cap = f.querySelector('figcaption');
+      var title = cap ? (cap.querySelector('b') ? cap.querySelector('b').textContent : '') : '';
+      var sub = '';
+      if(cap){
+        var clone = cap.cloneNode(true);
+        var b = clone.querySelector('b'); if(b) b.remove();
+        sub = clone.textContent.trim();
+      }
+      lImg.src = f.getAttribute('data-full') || f.querySelector('img').src;
+      lImg.alt = f.querySelector('img').alt || title;
+      lT.textContent = title;
+      lS.textContent = sub;
+      lC.textContent = (idx+1)+' / '+frames.length;
+      lbx.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function hide(){
+      lbx.classList.remove('on');
+      document.body.style.overflow = '';
+      lImg.removeAttribute('src');
+    }
+    frames.forEach(function(f,i){
+      f.addEventListener('click', function(){ show(i); });
+      f.setAttribute('tabindex','0');
+      f.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); show(i); } });
+    });
+    document.getElementById('lbxClose').addEventListener('click', hide);
+    document.getElementById('lbxPrev').addEventListener('click', function(e){ e.stopPropagation(); show(idx-1); });
+    document.getElementById('lbxNext').addEventListener('click', function(e){ e.stopPropagation(); show(idx+1); });
+    lbx.addEventListener('click', function(e){ if(e.target === lbx) hide(); });
+    document.addEventListener('keydown', function(e){
+      if(!lbx.classList.contains('on')) return;
+      if(e.key === 'Escape') hide();
+      else if(e.key === 'ArrowLeft') show(idx-1);
+      else if(e.key === 'ArrowRight') show(idx+1);
+    });
+
   }catch(err){
     document.documentElement.className = document.documentElement.className.replace(/\bjs\b/,'');
-    try{ document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); }); }catch(e){}
+    try{
+      build();
+      [].slice.call(document.querySelectorAll('.rv')).forEach(function(el){ el.classList.add('in'); });
+    }catch(e){}
   }
 })();
 </script>
